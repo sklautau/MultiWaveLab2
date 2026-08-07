@@ -46,11 +46,11 @@ INCLUDE_MODELS_THAT_TAKE_LONG_TIME = False
 
 def get_segments_columns(dataset_name):
     if dataset_name == "ieb1":
-        input_path = "../MultiWaveLab-Inputs/input_ieb1/"
+        input_path = "../config_experiments/input_ieb1/"
     elif dataset_name == "ieb2":
-        input_path = "../MultiWaveLab-Inputs/input_ieb2/"
+        input_path = "../config_experiments/input_ieb2/"
     elif dataset_name == "ieb3":
-        input_path = "../MultiWaveLab-Inputs/input_ieb3/"
+        input_path = "../config_experiments/input_ieb3/"
     else:
         raise ValueError(f"Unknown dataset: {dataset_name}")
 
@@ -63,11 +63,11 @@ def get_segments_columns(dataset_name):
 
 def get_chosen_metadata_columns(dataset_name):
     if dataset_name == "ieb1":
-        input_path = "../MultiWaveLab-Inputs/input_ieb1/"
+        input_path = "../config_experiments/input_ieb1/"
     elif dataset_name == "ieb2":
-        input_path = "../MultiWaveLab-Inputs/input_ieb2/"
+        input_path = "../config_experiments/input_ieb2/"
     elif dataset_name == "ieb3":
-        input_path = "../MultiWaveLab-Inputs/input_ieb3/"
+        input_path = "../config_experiments/input_ieb3/"
     else:
         raise ValueError(f"Unknown dataset: {dataset_name}")
 

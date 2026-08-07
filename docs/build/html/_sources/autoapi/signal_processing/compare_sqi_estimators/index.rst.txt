@@ -1,0 +1,74 @@
+signal_processing.compare_sqi_estimators
+========================================
+
+.. py:module:: signal_processing.compare_sqi_estimators
+
+.. autoapi-nested-parse::
+
+   Compare SQI estimators for IEB1 PPG files using DatasetConfig + SigMF.
+   It assumes the text file ieb1_best_sqi_files.txt exists in the dataset machine learning path, with contents:
+   hu_89
+   hu_52
+   hu_90
+   ...
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   signal_processing.compare_sqi_estimators.SCRIPT_DIR
+   signal_processing.compare_sqi_estimators.PROJECT_ROOT
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   signal_processing.compare_sqi_estimators._read_ppg_for_comparison
+   signal_processing.compare_sqi_estimators.compare_sqi_for_ieb1_dataset
+   signal_processing.compare_sqi_estimators.show_sqi_waveforms_based_on_id_list
+   signal_processing.compare_sqi_estimators.main_show_sqis_in_order
+   signal_processing.compare_sqi_estimators.main_compare_sqi_estimators
+
+
+Module Contents
+---------------
+
+.. py:data:: SCRIPT_DIR
+
+.. py:data:: PROJECT_ROOT
+
+.. py:function:: _read_ppg_for_comparison(dataset_config: datasets_util.naming_conventions.DatasetConfig, file_id: str, required_ppg_fs: int) -> tuple[numpy.ndarray, str]
+
+   Load preferred PPG input for SQI comparison.
+
+   Prefer already-generated filtered waveform. If it does not exist, read raw
+   SigMF and run the same filtering used in the current PPG pipeline.
+
+
+.. py:function:: compare_sqi_for_ieb1_dataset(dataset_config_file: str, should_show: bool = False, limit_files: int = -1) -> None
+
+   Compare SQI estimators over all IEB1 PPG files from the dataset config.
+
+
+.. py:function:: show_sqi_waveforms_based_on_id_list(dataset_config_file: str, should_show: bool = False, limit_files: int = -1) -> None
+
+   Given the text file ieb1_best_sqi_files.txt, with contents:
+   hu_89
+   hu_52
+   hu_90
+   ...
+   read it as a dataframe, and for each file_id, read the
+   corresponding PPG signal and compute SQI estimators in the
+   order provide by this file.
+   Then, use plot_signal_with_sqi() to plot the corresponding SQI signals.
+
+
+.. py:function:: main_show_sqis_in_order()
+
+.. py:function:: main_compare_sqi_estimators()
+

@@ -1,0 +1,114 @@
+features.features_per_modality
+==============================
+
+.. py:module:: features.features_per_modality
+
+.. autoapi-nested-parse::
+
+   Multimodal machine learning for physiological signals.
+   Modality-aware with support for: ECG, PPG and Bioimpedance.
+
+   New strategy to extract features from set:
+   For each segment in given dataframe, extract the feature based on its modality.
+   Then, create a new dataframe for each modality (three dataframes in current
+   case), with the extracted features,
+   such that they can have the same columns, and where each row has the
+   corresponding feature values. Include in each row, all important information,
+   such as patient_id, quality_indicator, segment ID, etc, so that we can later merge the dataframes based
+   on these columns, and have a concatenaded dataframe with all features for each segment,
+   which can then be used for machine learning.
+
+   # Set command line argument to True to use fixed-duration windows (e.g., 5 seconds) instead of variable-duration segments.
+   USE_FIXED_DURATION_WINDOWS = True or False
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   features.features_per_modality.WAVEFORM_ID
+   features.features_per_modality.RAISE_EXCEPTION_ON_PPG_PROCESSING
+   features.features_per_modality.METADATA_COLUMNS
+   features.features_per_modality.USE_FIXED_DURATION_WINDOWS
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   features.features_per_modality.parse_bool_arg
+   features.features_per_modality.extract_features_for_segment
+   features.features_per_modality._append_metadata_to_features
+   features.features_per_modality.build_modality_dataframes
+   features.features_per_modality.save_modality_dataframes
+
+
+Module Contents
+---------------
+
+.. py:data:: WAVEFORM_ID
+   :value: 'filtered'
+
+
+.. py:data:: RAISE_EXCEPTION_ON_PPG_PROCESSING
+   :value: True
+
+
+   
+
+
+
+   METADATA_COLUMNS = [
+       "participant_id",
+       "session_id",
+       "datetime",
+       "file_id",
+       "modality",
+       "segment_id",
+       "window_id",
+       "quality_indicator",
+       "GLC"
+   ]
+
+.. py:data:: METADATA_COLUMNS
+
+.. py:function:: parse_bool_arg(value: str) -> bool
+
+   Parse common string representations of booleans.
+
+
+.. py:function:: extract_features_for_segment(row: pandas.Series, fs_dict: Dict[str, int], datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> Any
+
+   Extract features for a single segment based on its modality.
+
+   :param row: A row from segments dataframe with segment info
+   :param fs_dict: Sampling rates dict {"ecg": 250, "ppg": 100, "bioimp": 50}
+   :param datasetConfig: Dataset configuration object
+
+   :returns: Dictionary with extracted features
+
+
+.. py:function:: _append_metadata_to_features(features: Any, segment_metadata: Dict[str, Any]) -> list[Dict[str, Any]]
+
+   Attach metadata to a dict or a list of per-pulse dicts.
+
+
+.. py:function:: build_modality_dataframes(segmentManager: segments.segments_core.SegmentManager, fs_dict: Dict[str, int], datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> Tuple[pandas.DataFrame, pandas.DataFrame, pandas.DataFrame]
+
+   Extract features for each segment and create separate dataframes per modality.
+
+   :returns: Tuple of (df_ecg, df_ppg, df_bioimp)
+
+
+.. py:function:: save_modality_dataframes(df_ecg: pandas.DataFrame, df_ppg: pandas.DataFrame, df_bioimp: pandas.DataFrame, datasetConfig: datasets_util.naming_conventions.DatasetConfig)
+
+   Save modality-specific dataframes to CSV files.
+
+
+.. py:data:: USE_FIXED_DURATION_WINDOWS
+   :value: False
+
+

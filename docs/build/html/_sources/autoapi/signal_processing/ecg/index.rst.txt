@@ -1,0 +1,139 @@
+signal_processing.ecg
+=====================
+
+.. py:module:: signal_processing.ecg
+
+.. autoapi-nested-parse::
+
+   ECG signal processing.
+   This module provides functions for processing ECG signals, including filtering,
+   outlier removal, and feature extraction. It also includes pipelines for
+   processing ECG files in a dataset.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   signal_processing.ecg.SHOULD_PLOT
+   signal_processing.ecg.REQUIRED_FS
+   signal_processing.ecg.DEBUGGING
+   signal_processing.ecg.SUBJECT_IDS_TO_PLOT
+   signal_processing.ecg.FILE_IDS_TO_PLOT
+   signal_processing.ecg.SIGNAL_PIPELINES
+   signal_processing.ecg.QUALITY_PIPELINES
+   signal_processing.ecg.FEATURE_PIPELINES
+   signal_processing.ecg.parser
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   signal_processing.ecg.twos_complement_to_signed
+   signal_processing.ecg._load_debug_signal_csv
+   signal_processing.ecg.__plot_input_output_waveforms
+   signal_processing.ecg.ecg_sqi_neurokit_waveform_processing
+   signal_processing.ecg.ecg_neurokit_waveform_processing
+   signal_processing.ecg.ecg_signal_processing_pipeline
+   signal_processing.ecg.old_ecg_filtering_pipeline
+   signal_processing.ecg.old_ecg_quality_pipeline
+   signal_processing.ecg.extract_features_group3_spectral
+   signal_processing.ecg.ecg_all_feature_extracion
+   signal_processing.ecg.extract_ecg_features
+
+
+Module Contents
+---------------
+
+.. py:data:: SHOULD_PLOT
+   :value: False
+
+
+.. py:data:: REQUIRED_FS
+   :value: 500
+
+
+.. py:data:: DEBUGGING
+   :value: False
+
+
+.. py:data:: SUBJECT_IDS_TO_PLOT
+
+.. py:data:: FILE_IDS_TO_PLOT
+
+.. py:function:: twos_complement_to_signed(x, bits)
+
+   Convert unsigned integers encoded in two's complement to signed integers.
+
+   :param x: Unsigned integer values.
+   :type x: scalar or array-like
+   :param bits: Number of bits of the representation.
+   :type bits: int
+
+   :returns: Signed integer values.
+   :rtype: ndarray or scalar
+
+
+.. py:function:: _load_debug_signal_csv(file_path: str) -> numpy.ndarray
+
+   Load a 1D numeric ECG signal from CSV/TSV text files with robust encoding parsing.
+
+
+.. py:function:: __plot_input_output_waveforms(input_wav, output_wav, fs, title, title1='Raw signal', title2='Filtered signal') -> None
+
+.. py:function:: ecg_sqi_neurokit_waveform_processing(input_signal: numpy.ndarray, fs: int) -> numpy.ndarray
+
+.. py:function:: ecg_neurokit_waveform_processing(raw: numpy.ndarray, fs: int) -> numpy.ndarray
+
+.. py:function:: ecg_signal_processing_pipeline(dataset_config_file: str, input_waveform_id: str, pipeline: str, output_waveform_id: str) -> None
+
+   Use this method for both waveform and SQI processing pipelines. The pipeline is selected by the "pipeline" argument.
+
+
+.. py:function:: old_ecg_filtering_pipeline(dataset_config_file: str) -> None
+
+   Backward-compatible wrapper for ECG signal processing.
+
+
+.. py:function:: old_ecg_quality_pipeline(dataset_config_file: str) -> None
+
+   Backward-compatible wrapper for ECG SQI processing.
+
+
+.. py:function:: extract_features_group3_spectral(ecg, fs)
+
+   Spectral features.
+   We cannot trust raw spectral power features unless every PPG segment has
+   been amplitude-normalized and quality-controlled. Otherwise, the model may
+   learn measurement conditions rather than glucose-related information.
+
+
+.. py:function:: ecg_all_feature_extracion(ecg: numpy.ndarray, fs: int) -> Dict[str, Any]
+
+   All ECG processing depends on NeuroKit2.
+   Warning: This function uses NeuroKit2 to extract features from ECG signals. NeuroKit2 may raise
+   warnings for certain signals, especially if they are of low quality or have artifacts. These warnings are caught and ignored
+   in this function to ensure that feature extraction continues without interruption.
+
+   Extracts ECG-derived features from a 1-D ECG signal using NeuroKit2.
+   The method returns a dictionary containing:
+       - heart-rate mean and standard deviation
+       - NeuroKit HRV features
+       - RR-interval mean and standard deviation
+       - a simple ECG quality indicator
+
+
+.. py:function:: extract_ecg_features(datasetConfig: datasets_util.naming_conventions.DatasetConfig, ecg: numpy.ndarray, fs: int) -> Dict[str, Any]
+
+.. py:data:: SIGNAL_PIPELINES
+
+.. py:data:: QUALITY_PIPELINES
+
+.. py:data:: FEATURE_PIPELINES
+
+.. py:data:: parser
+

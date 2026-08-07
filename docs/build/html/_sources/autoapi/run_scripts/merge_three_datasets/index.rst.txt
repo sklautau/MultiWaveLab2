@@ -1,0 +1,72 @@
+run_scripts.merge_three_datasets
+================================
+
+.. py:module:: run_scripts.merge_three_datasets
+
+.. autoapi-nested-parse::
+
+   Create the All-PPGs dataset by merging the three IEB datasets and copying the PPG SIGMF files.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   run_scripts.merge_three_datasets.DATASET_ROOT_OUTPUT
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   run_scripts.merge_three_datasets.resample_signal
+   run_scripts.merge_three_datasets.copy_ppg_sigmf_files
+   run_scripts.merge_three_datasets.merge_ppg_datasets
+
+
+Module Contents
+---------------
+
+.. py:function:: resample_signal(data, original_fs, target_fs)
+
+   Resample the signal to the target sampling frequency.
+
+   :param data: numpy array of shape (n_samples,)
+   :param original_fs: original sampling frequency
+   :param target_fs: target sampling frequency
+
+   :returns: numpy array of shape (new_n_samples,)
+   :rtype: resampled_data
+
+
+.. py:function:: copy_ppg_sigmf_files(merged_csv: str, original_data_root: str = '../original data', output_dataset: str = '../original data/all_datasets')
+
+   Copy all PPG SIGMF files referenced in the merged CSV.
+
+   For each row, copies both
+       *.sigmf-data
+       *.sigmf-meta
+
+   while preserving the relative directory structure.
+
+
+.. py:function:: merge_ppg_datasets(output_csv: str = 'merged_ppg_dataset.csv') -> pandas.DataFrame
+
+   Merge the PPG entries from the three IEB datasets into a single CSV.
+
+   Output columns:
+       file_id
+       participant_id
+       relative_path
+       modality
+       session_id
+       datetime
+       GLC
+       dataset
+
+
+.. py:data:: DATASET_ROOT_OUTPUT
+

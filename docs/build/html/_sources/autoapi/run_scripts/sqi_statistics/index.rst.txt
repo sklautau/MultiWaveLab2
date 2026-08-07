@@ -1,0 +1,78 @@
+run_scripts.sqi_statistics
+==========================
+
+.. py:module:: run_scripts.sqi_statistics
+
+.. autoapi-nested-parse::
+
+   Compute SQI statistics/histograms over all segments for all SQI pipelines.
+
+   The script:
+   1) loads DatasetConfig from JSON,
+   2) resolves segments via Segmenter/SegmentManager,
+   3) iterates all segment rows for a chosen modality,
+   4) aggregates SQI samples inside segments for each waveform in ALL_PIPELINES,
+   5) writes per-pipeline statistics CSV and one histogram PDF per pipeline.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   run_scripts.sqi_statistics.SCRIPT_DIR
+   run_scripts.sqi_statistics.PROJECT_ROOT
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   run_scripts.sqi_statistics._resolve_default_pipeline_for_modality
+   run_scripts.sqi_statistics._resolve_pipelines
+   run_scripts.sqi_statistics._build_segment_manager
+   run_scripts.sqi_statistics._compute_stats
+   run_scripts.sqi_statistics._gather_values_by_pipeline
+   run_scripts.sqi_statistics._save_histogram
+   run_scripts.sqi_statistics._save_cumulative_pdf
+   run_scripts.sqi_statistics._save_superimposed_histogram
+   run_scripts.sqi_statistics._save_superimposed_cumulative_pdf
+   run_scripts.sqi_statistics.main
+
+
+Module Contents
+---------------
+
+.. py:data:: SCRIPT_DIR
+
+.. py:data:: PROJECT_ROOT
+   :value: b'.'
+
+
+.. py:function:: _resolve_default_pipeline_for_modality(dataset_config: datasets_util.naming_conventions.DatasetConfig, modality: str) -> str
+
+.. py:function:: _resolve_pipelines(dataset_config: datasets_util.naming_conventions.DatasetConfig, modality: str, pipelines_arg: str | None) -> List[str]
+
+   Resolve which SQI waveform folders to evaluate.
+
+   Defaults to the single pipeline configured in the dataset JSON for the selected modality.
+
+
+.. py:function:: _build_segment_manager(dataset_config: datasets_util.naming_conventions.DatasetConfig, segmenter_file: str | None, segments_file: str | None) -> segments.segments_core.SegmentManager
+
+.. py:function:: _compute_stats(values: numpy.ndarray) -> Dict[str, float]
+
+.. py:function:: _gather_values_by_pipeline(dataset_config: datasets_util.naming_conventions.DatasetConfig, segments_df: pandas.DataFrame, modality: str, pipelines: List[str]) -> tuple[Dict[str, numpy.ndarray], Dict[str, int], int]
+
+.. py:function:: _save_histogram(values: numpy.ndarray, pipeline: str, bins: int, out_file: pathlib.Path, should_show: bool = False) -> None
+
+.. py:function:: _save_cumulative_pdf(values: numpy.ndarray, pipeline: str, bins: int, out_file: pathlib.Path, should_show: bool = False) -> None
+
+.. py:function:: _save_superimposed_histogram(values_by_pipeline: Dict[str, numpy.ndarray], pipelines: List[str], bins: int, out_file: pathlib.Path, should_show: bool = False) -> None
+
+.. py:function:: _save_superimposed_cumulative_pdf(values_by_pipeline: Dict[str, numpy.ndarray], pipelines: List[str], bins: int, out_file: pathlib.Path, should_show: bool = False) -> None
+
+.. py:function:: main() -> None
+

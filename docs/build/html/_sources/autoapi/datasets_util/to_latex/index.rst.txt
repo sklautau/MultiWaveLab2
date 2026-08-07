@@ -1,0 +1,83 @@
+datasets_util.to_latex
+======================
+
+.. py:module:: datasets_util.to_latex
+
+.. autoapi-nested-parse::
+
+   Methods to output Latex
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   datasets_util.to_latex.df
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   datasets_util.to_latex.get_integer_valued_columns
+   datasets_util.to_latex.format_number
+   datasets_util.to_latex.to_latex_table
+   datasets_util.to_latex._latex_escape
+   datasets_util.to_latex._pretty_metric_name
+   datasets_util.to_latex._base_metric
+   datasets_util.to_latex._merge_columns
+   datasets_util.to_latex.old_merge_columns
+   datasets_util.to_latex.to_latex_CV_results_table
+
+
+Module Contents
+---------------
+
+.. py:function:: get_integer_valued_columns(df: pandas.DataFrame) -> list[str]
+
+   Return columns whose non-missing values are all integers,
+   even if the dtype is float.
+
+
+.. py:function:: format_number(v)
+
+.. py:function:: to_latex_table(df: pandas.DataFrame, input_file_name: str, caption: str = '') -> str
+
+   Converts a CSV file into a generic LaTeX table.
+
+   :param df: DataFrame to convert to LaTeX.
+   :type df: pd.DataFrame
+   :param caption: Caption of the LaTeX table.
+   :type caption: str, optional
+
+
+.. py:function:: _latex_escape(text: str) -> str
+
+   Escape LaTeX special characters.
+
+
+.. py:function:: _pretty_metric_name(metric: str) -> str
+
+.. py:function:: _base_metric(metric: str) -> str
+
+   rmse_mean -> rmse
+
+
+.. py:function:: _merge_columns(df, metrics, best_rows=None)
+
+.. py:function:: old_merge_columns(df: pandas.DataFrame, metrics: list[str]) -> pandas.DataFrame
+
+   Creates one column per metric with values such as:
+       72.08 ± 13.20
+
+
+.. py:function:: to_latex_CV_results_table(input_file_name: str, train_columns: list[str], test_columns: list[str], table_title: str) -> str
+
+   Creates a LaTeX table with grouped Train/Test columns.
+
+
+.. py:data:: df
+

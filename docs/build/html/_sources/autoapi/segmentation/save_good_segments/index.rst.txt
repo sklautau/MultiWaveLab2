@@ -1,0 +1,49 @@
+segmentation.save_good_segments
+===============================
+
+.. py:module:: segmentation.save_good_segments
+
+.. autoapi-nested-parse::
+
+   Write file with segments of good quality
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   segmentation.save_good_segments.USE_FIXED_DURATION_WINDOWS
+   segmentation.save_good_segments.OUTPUT_ALL_SEGMENTS_FILE
+   segmentation.save_good_segments.MIN_THRESHOLD_PPG
+   segmentation.save_good_segments.MIN_THRESHOLD_ECG
+   segmentation.save_good_segments.MIN_DURATION
+   segmentation.save_good_segments.parser
+
+
+Module Contents
+---------------
+
+.. py:data:: USE_FIXED_DURATION_WINDOWS
+   :value: False
+
+
+.. py:data:: OUTPUT_ALL_SEGMENTS_FILE
+   :value: 'all_fixed_duration_windows_with_quality.csv'
+
+
+.. py:data:: MIN_THRESHOLD_PPG
+   :value: 0.95
+
+
+.. py:data:: MIN_THRESHOLD_ECG
+   :value: 0.4
+
+
+.. py:data:: MIN_DURATION
+   :value: 10
+
+
+.. py:data:: parser
+

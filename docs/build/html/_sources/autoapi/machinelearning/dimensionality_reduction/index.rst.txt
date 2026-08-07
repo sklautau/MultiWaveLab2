@@ -1,0 +1,47 @@
+machinelearning.dimensionality_reduction
+========================================
+
+.. py:module:: machinelearning.dimensionality_reduction
+
+.. autoapi-nested-parse::
+
+   The “supervised” methods are learning embeddings
+   using glucose (GLC) to visualize glucose structure,
+   and later the plots use patient_id to show
+   subject separability.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   machinelearning.dimensionality_reduction.INPUT_FEATURES_FILE
+   machinelearning.dimensionality_reduction.METHOD_TO_ANNOTATE
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   machinelearning.dimensionality_reduction.run_dimensionality_reduction
+   machinelearning.dimensionality_reduction.main
+
+
+Module Contents
+---------------
+
+.. py:data:: INPUT_FEATURES_FILE
+   :value: 'dataset_selected_features_loso.csv'
+
+
+.. py:data:: METHOD_TO_ANNOTATE
+   :value: 'UMAP'
+
+
+.. py:function:: run_dimensionality_reduction(datasetConfig, method_to_annotate: str = METHOD_TO_ANNOTATE) -> None
+
+.. py:function:: main() -> None
+

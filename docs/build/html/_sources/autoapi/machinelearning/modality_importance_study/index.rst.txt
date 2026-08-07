@@ -1,0 +1,153 @@
+machinelearning.modality_importance_study
+=========================================
+
+.. py:module:: machinelearning.modality_importance_study
+
+.. autoapi-nested-parse::
+
+   This is a copy of regression_evaluation.py, but with the
+   goal of studying the importance of each modality in the regression task.
+   The idea is to run the same regression evaluation, but with different
+   combinations of modalities, and compare the results.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   machinelearning.modality_importance_study.INCLUDE_MODELS_THAT_TAKE_LONG_TIME
+   machinelearning.modality_importance_study.parser
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   machinelearning.modality_importance_study.get_segments_columns
+   machinelearning.modality_importance_study.get_chosen_metadata_columns
+   machinelearning.modality_importance_study.get_modality_expanded_segments_columns
+   machinelearning.modality_importance_study.regression_metrics
+   machinelearning.modality_importance_study.nested_cv_grouped
+   machinelearning.modality_importance_study.choose_feature_modalities
+   machinelearning.modality_importance_study.remove_metadata_columns_but_id_and_glc
+   machinelearning.modality_importance_study.train_with_train_validation_sets
+   machinelearning.modality_importance_study.regression_evaluation_for_specific_modalities
+
+
+Module Contents
+---------------
+
+.. py:data:: INCLUDE_MODELS_THAT_TAKE_LONG_TIME
+   :value: False
+
+
+.. py:function:: get_segments_columns(dataset_name)
+
+.. py:function:: get_chosen_metadata_columns(dataset_name)
+
+.. py:function:: get_modality_expanded_segments_columns(dataset_name, modality_prefixes=['ppg', 'ecg', 'bio'])
+
+   After data fusion we have extra segment columns for
+   each modality, e.g. ppg_mean, ecg_mean, bio_mean, etc.
+   This function returns the list of all segment columns with
+   the modality prefix added.
+
+
+.. py:function:: regression_metrics(y_true: numpy.ndarray | pandas.Series, y_pred: numpy.ndarray | pandas.Series) -> dict[str, float]
+
+   Compute common regression metrics for predictions.
+
+   :param y_true: Ground-truth target values.
+   :type y_true: np.ndarray | pd.Series
+   :param y_pred: Predicted target values.
+   :type y_pred: np.ndarray | pd.Series
+
+   :returns: Dictionary with RMSE, MAE, and R2 values.
+   :rtype: dict[str, float]
+
+
+.. py:function:: nested_cv_grouped(df: pandas.DataFrame, target_col: str, group_col: str = 'participant_id', outer_splits: int = 5, inner_splits: int = 3) -> pandas.DataFrame
+
+   Run grouped nested cross-validation across candidate regressors.
+
+   The outer GroupKFold estimates generalization performance, while
+   the inner GroupKFold tunes hyperparameters with GridSearchCV.
+
+   :param df: Input dataframe containing features, target, and group column.
+   :type df: pd.DataFrame
+   :param target_col: Name of the target column.
+   :type target_col: str
+   :param group_col: Name of the grouping column used to avoid leakage across folds.
+   :type group_col: str, optional
+   :param outer_splits: Number of outer CV folds.
+   :type outer_splits: int, optional
+   :param inner_splits: Number of inner CV folds.
+   :type inner_splits: int, optional
+
+   :returns: Aggregated metrics per model, sorted by mean RMSE.
+   :rtype: pd.DataFrame
+
+
+.. py:function:: choose_feature_modalities(df: pandas.DataFrame, modalities: list, always_keep=['GLC', 'participant_id'])
+
+   Keep only feature columns matching selected modality prefixes.
+
+   :param df: Input dataframe with feature and metadata columns.
+   :type df: pd.DataFrame
+   :param modalities: Prefixes used to select feature columns (e.g., ["ppg_", "ecg_"]).
+   :type modalities: list
+   :param always_keep: Columns that should be preserved even if they do not match a prefix.
+   :type always_keep: list, optional
+
+   :returns: Filtered dataframe with selected feature columns.
+   :rtype: pd.DataFrame
+
+
+.. py:function:: remove_metadata_columns_but_id_and_glc(df: pandas.DataFrame, metadata_columns: list[str], segments_columns: list[str]) -> pandas.DataFrame
+
+   Drop non-feature metadata columns while keeping grouping
+   information (participant_id) and target (GLC).
+
+   :param df: Input dataframe.
+   :type df: pd.DataFrame
+
+   :returns: Dataframe without session and datetime columns.
+   :rtype: pd.DataFrame
+
+
+.. py:function:: train_with_train_validation_sets(results: pandas.DataFrame, train_df: pandas.DataFrame, target_col: str, inner_splits: int = 3) -> tuple[sklearn.base.BaseEstimator, str]
+
+   Refit the best model from nested CV on train+validation data.
+
+   :param results: Nested CV summary where the top row contains the best model name.
+   :type results: pd.DataFrame
+   :param train_df: Combined training and validation dataframe.
+   :type train_df: pd.DataFrame
+   :param target_col: Name of the target column.
+   :type target_col: str
+   :param inner_splits: Number of grouped folds used for the refit GridSearchCV.
+   :type inner_splits: int, optional
+
+   :returns: Best estimator fitted on the full train+validation set.
+   :rtype: BaseEstimator
+
+
+.. py:function:: regression_evaluation_for_specific_modalities(train_csv: str, modalities: list[str], prefix_for_results_file: str, output_file_name: str, metadata_columns: list[str], segments_columns: list[str]) -> None
+
+   Execute the end-to-end grouped regression evaluation workflow.
+
+   This routine loads train/validation/test splits organized as
+   CSV files with features, selects feature
+   modalities, performs grouped nested cross-validation, refits the
+   best model on train+validation data, evaluates on test data, and
+   reports a dummy baseline for comparison.
+
+   :param modalities: Feature prefixes to include in the evaluation.
+   :type modalities: list[str]
+
+
+.. py:data:: parser
+

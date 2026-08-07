@@ -1,0 +1,73 @@
+run_scripts.segments_statistics
+===============================
+
+.. py:module:: run_scripts.segments_statistics
+
+.. autoapi-nested-parse::
+
+   Generate PDF plots of average segment duration (seconds) per participant.
+
+   The script relies on DatasetConfig + SegmentManager to load dataset metadata
+   and the segments CSV, then aggregates duration by participant_id for a
+   selected modality.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   run_scripts.segments_statistics.AXIS_LABEL_FONTSIZE
+   run_scripts.segments_statistics.AXIS_TICK_FONTSIZE
+   run_scripts.segments_statistics.TITLE_FONTSIZE
+   run_scripts.segments_statistics.SCRIPT_DIR
+   run_scripts.segments_statistics.PROJECT_ROOT
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   run_scripts.segments_statistics._get_sample_rate_hz
+   run_scripts.segments_statistics._build_file_to_participant_map
+   run_scripts.segments_statistics._aggregate_total_seconds_per_participant
+   run_scripts.segments_statistics._plot_participant_duration_pdf
+   run_scripts.segments_statistics._plot_participant_duration_cdf_pdf
+   run_scripts.segments_statistics.main
+
+
+Module Contents
+---------------
+
+.. py:data:: AXIS_LABEL_FONTSIZE
+   :value: 16
+
+
+.. py:data:: AXIS_TICK_FONTSIZE
+   :value: 16
+
+
+.. py:data:: TITLE_FONTSIZE
+   :value: 16
+
+
+.. py:data:: SCRIPT_DIR
+
+.. py:data:: PROJECT_ROOT
+   :value: b'.'
+
+
+.. py:function:: _get_sample_rate_hz(dataset_config: datasets_util.naming_conventions.DatasetConfig, modality: str) -> float
+
+.. py:function:: _build_file_to_participant_map(dataset_config: datasets_util.naming_conventions.DatasetConfig) -> Dict[str, str]
+
+.. py:function:: _aggregate_total_seconds_per_participant(dataset_config: datasets_util.naming_conventions.DatasetConfig, segments_df: pandas.DataFrame, modality: str, aggregation_mode: str) -> pandas.DataFrame
+
+.. py:function:: _plot_participant_duration_pdf(participant_df: pandas.DataFrame, output_pdf: pathlib.Path, title: str, x_label: str, show_plot: bool = False) -> None
+
+.. py:function:: _plot_participant_duration_cdf_pdf(participant_df: pandas.DataFrame, output_pdf: pathlib.Path, title: str, x_label: str, show_plot: bool = False) -> None
+
+.. py:function:: main() -> None
+

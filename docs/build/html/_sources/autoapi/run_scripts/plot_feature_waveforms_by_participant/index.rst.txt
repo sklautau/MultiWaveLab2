@@ -1,0 +1,73 @@
+run_scripts.plot_feature_waveforms_by_participant
+=================================================
+
+.. py:module:: run_scripts.plot_feature_waveforms_by_participant
+
+.. autoapi-nested-parse::
+
+   Plot grouped feature waveforms over segment order for each participant.
+
+   The script expects a features CSV where metadata columns are present, typically
+   on the right side, and feature columns are numeric predictors.
+
+   Nested-loop behavior:
+   - Outer loop: iterate over participant_id values.
+   - Inner loop: iterate over groups of N feature columns and plot them together.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   run_scripts.plot_feature_waveforms_by_participant.DEFAULT_METADATA_COLUMNS
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   run_scripts.plot_feature_waveforms_by_participant._segment_sort_key
+   run_scripts.plot_feature_waveforms_by_participant._resolve_feature_columns
+   run_scripts.plot_feature_waveforms_by_participant._group_features_by_identifier
+   run_scripts.plot_feature_waveforms_by_participant._plot_feature_group_for_participant
+   run_scripts.plot_feature_waveforms_by_participant._standardize_feature_columns_with_reference
+   run_scripts.plot_feature_waveforms_by_participant.plot_feature_waveforms
+   run_scripts.plot_feature_waveforms_by_participant.main
+
+
+Module Contents
+---------------
+
+.. py:data:: DEFAULT_METADATA_COLUMNS
+
+.. py:function:: _segment_sort_key(segment_id: str) -> tuple[str, int]
+
+   Sort segment IDs using their numeric suffix when available.
+   Examples: seg_id2 < seg_id10.
+
+
+.. py:function:: _resolve_feature_columns(df: pandas.DataFrame, metadata_columns: set[str]) -> List[str]
+
+.. py:function:: _group_features_by_identifier(feature_columns: List[str]) -> Dict[str, List[str]]
+
+   Group features by the second underscore-separated field.
+
+   Examples:
+   - ppg_u5_m3_w10 -> group 'u5'
+   - ppg_i6_IMF_1 -> group 'i6'
+
+
+.. py:function:: _plot_feature_group_for_participant(participant_df: pandas.DataFrame, participant_id: str, group_id: str, feature_group: List[str], output_file: pathlib.Path, show_plot: bool, standardized: bool) -> None
+
+.. py:function:: _standardize_feature_columns_with_reference(df_to_transform: pandas.DataFrame, df_reference: pandas.DataFrame, feature_columns: List[str]) -> pandas.DataFrame
+
+   Fit scaler on reference dataframe, transform target dataframe.
+
+
+.. py:function:: plot_feature_waveforms(features_csv: pathlib.Path, output_dir: pathlib.Path, participant_ids: list[str] | None, show_plots: bool, standardize_features: bool) -> None
+
+.. py:function:: main() -> None
+

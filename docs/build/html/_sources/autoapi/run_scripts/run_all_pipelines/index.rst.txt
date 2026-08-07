@@ -1,0 +1,98 @@
+run_scripts.run_all_pipelines
+=============================
+
+.. py:module:: run_scripts.run_all_pipelines
+
+.. autoapi-nested-parse::
+
+   Script to run all pipelines in sequence, given a JSON configuration file.
+
+   Treat scripts as "executables" and call them with subprocess.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   run_scripts.run_all_pipelines.PYTHON_EXECUTABLE
+   run_scripts.run_all_pipelines.parser
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   run_scripts.run_all_pipelines.Tee
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   run_scripts.run_all_pipelines.remove_missing_data
+   run_scripts.run_all_pipelines.run_script
+   run_scripts.run_all_pipelines.signal_processing
+   run_scripts.run_all_pipelines.feature_extraction
+   run_scripts.run_all_pipelines.fusion_and_split
+   run_scripts.run_all_pipelines.feature_selection
+   run_scripts.run_all_pipelines.machine_learning_regression
+
+
+Module Contents
+---------------
+
+.. py:data:: PYTHON_EXECUTABLE
+   :value: 'python'
+
+
+.. py:class:: Tee(*streams)
+
+   Code to be able to print to console and log file at the same time.
+
+
+   .. py:attribute:: streams
+      :value: ()
+
+
+
+   .. py:method:: write(data)
+
+
+   .. py:method:: flush()
+
+
+.. py:function:: remove_missing_data(df: pandas.DataFrame, drop_rows: bool = True, drop_cols: bool = False, inplace: bool = False) -> pandas.DataFrame
+
+   Remove rows and/or columns containing any missing values.
+
+   :param df: Input DataFrame
+   :type df: pd.DataFrame
+   :param drop_rows: If True, drop rows with any NaN
+   :type drop_rows: bool
+   :param drop_cols: If True, drop columns with any NaN
+   :type drop_cols: bool
+   :param inplace: If True, modify df in place
+   :type inplace: bool
+
+   :returns: Cleaned DataFrame (or None if inplace=True)
+   :rtype: pd.DataFrame
+
+
+.. py:function:: run_script(script_path: str, *args: str)
+
+.. py:function:: signal_processing(json_file: str)
+
+.. py:function:: feature_extraction(json_file: str)
+
+.. py:function:: fusion_and_split(json_file: str)
+
+.. py:function:: feature_selection(json_file: str)
+
+.. py:function:: machine_learning_regression(json_file: str)
+
+.. py:data:: parser
+

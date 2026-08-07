@@ -1,0 +1,162 @@
+datasets_util.segments
+======================
+
+.. py:module:: datasets_util.segments
+
+.. autoapi-nested-parse::
+
+   Utilities to read and write Dataframe files with segments.
+   The segments are defined as contiguous time intervals of good quality data, based on a quality indicator (e.g., signal quality index) and a minimum duration threshold.
+   The output is a CSV file with the following columns:
+
+   segment_id,file_id,modality,start_sample,duration,quality_indicator
+   seg_id0,file_id2,ppg,0,80840,0.9932449460029602
+   seg_id1,file_id2,ppg,81183,14800,0.9863582849502563
+   ...
+
+   where segment_id is a unique identifier for each segment across all files in the dataset, file_id is the identifier of the file from which the segment was extracted, modality is the type of signal (e.g., ppg, ecg, bioimp), start_sample is the index of the first sample of
+   the segment (inclusive), duration is the length of the segment in samples, and
+   quality_indicator is the median or average signal quality index for the segment
+   in the given modality.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   datasets_util.segments.PREFIX_SEGMENT_ID
+   datasets_util.segments.DEBUGGING
+   datasets_util.segments.input_file
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   datasets_util.segments.Segmenter
+   datasets_util.segments.SegmentManager
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   datasets_util.segments.is_it_a_filename
+   datasets_util.segments.format_segment_row
+   datasets_util.segments.extract_bioimpedance_segments
+   datasets_util.segments.segments_with_all_samples_above_threshold
+   datasets_util.segments.number_of_windows
+
+
+Module Contents
+---------------
+
+.. py:data:: PREFIX_SEGMENT_ID
+   :value: 'seg_id'
+
+
+.. py:data:: DEBUGGING
+   :value: False
+
+
+.. py:function:: is_it_a_filename(filename: str) -> bool
+
+   is_it_a_filename("myfile.txt")                 # True
+   is_it_a_filename("./myfile.txt")               # True
+   is_it_a_filename(".\myfile.txt")              # True
+   is_it_a_filename("../subfolder1/myfile.txt")   # False
+   is_it_a_filename("c:/fold/subfolder1/myfile.txt")  # False
+   is_it_a_filename("/tmp/myfile.txt")            # False
+   is_current_directory("subfolder/myfile.txt")       # False
+
+
+.. py:class:: Segmenter(segmenter: Union[str, pathlib.Path], dataset_config_file: str)
+
+   Initialize from either:
+   - a dictionary
+   - a JSON file path (str or Path)
+
+
+   .. py:attribute:: sqi_input_waveform_id
+
+
+   .. py:attribute:: modalities
+
+
+   .. py:attribute:: category
+
+
+   .. py:attribute:: type
+
+
+   .. py:attribute:: wave_min_duration
+
+
+   .. py:attribute:: mean_or_median
+
+
+   .. py:attribute:: output_file_name
+
+
+   .. py:attribute:: config_dictionary
+
+
+.. py:class:: SegmentManager(datasetConfig: datasets_util.naming_conventions.DatasetConfig, segments: Union[pandas.DataFrame, str, pathlib.Path])
+
+   Class to extract segments of good quality data from the dataset.
+   For instance, it can be based on a quality indicator and a minimum duration threshold.
+
+
+   .. py:attribute:: _datasetConfig
+
+
+   .. py:method:: get_segments_dataframe() -> pandas.DataFrame
+
+      Return the segments info as a pandas DataFrame.
+
+
+
+   .. py:method:: get_segments_of_file_id(file_id: str) -> pandas.DataFrame
+
+
+   .. py:method:: load_segments(segments_file: str) -> pandas.DataFrame
+
+
+   .. py:method:: best_segment(file_id: str, modality: str) -> tuple[Dict[str, Any], float]
+
+
+.. py:method:: best_segment(all_segments_dataframe, file_id: str, modality: str) -> tuple[Dict[str, Any], float]
+   :staticmethod:
+
+
+.. py:function:: format_segment_row(segment_index: int, file_id: str, start: int, duration: int, modality: str, quality_indicator: float) -> Dict[str, Any]
+
+.. py:function:: extract_bioimpedance_segments(quality_per_sample: numpy.ndarray, file_id: str, current_index: int = 0) -> Dict[str, Any]
+
+.. py:function:: segments_with_all_samples_above_threshold(quality_indicator: numpy.ndarray, file_id: str, fs: int, modality: str, current_index: int = 0, min_quality: float = 0.5, min_len_seconds: float = 5.0, use_median_over_mean: bool = True) -> list[Dict[str, Any]]
+
+.. py:function:: number_of_windows(segment_duration_samples: int, window_size_samples: int, window_shift_samples: int) -> int
+
+   Calculate the number of windows of size L seconds with shift S seconds that can be extracted from a segment of duration D seconds.
+   The formula is: M = floor((N - L) / S) + 1
+   See: https://ai6g.org/books/dsp/BlockorWindowProcessing.html#-the-top-representation-shows-nonoverlapping-windows-of-l-samples-with-both-nonwindowed-indexing-xn-and-windowed-indexing-xkm-the-bottom-representation-shows-overlapping-windows-with-l-and-shift-s-sample-using-nonwindowed-indexing
+
+
+.. py:method:: windows_with_all_samples_above_threshold(sqi_signal: numpy.ndarray, segment_row: dict[str, Any], window_size_samples: int, window_shift_samples: int, segment_counter: int, use_median_over_mean: bool = True) -> list[Dict[str, Any]]
+   :staticmethod:
+
+
+   Split one segment row into fixed-duration windows with given shift.
+   Returns a new dataframe with each row representing a special
+   segment with fixed-duration, which is called "window".
+   The output dataframe keeps the same columns as input.
+
+
+.. py:data:: input_file
+   :value: '../input_ieb1/segments/segmenters/segmenter_window.json'
+
+

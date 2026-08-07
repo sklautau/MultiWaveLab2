@@ -1,0 +1,107 @@
+features.estimate_sqi_using_external_libraries
+==============================================
+
+.. py:module:: features.estimate_sqi_using_external_libraries
+
+.. autoapi-nested-parse::
+
+   SQI estimators with a legacy-compatible wrapper API.
+
+   This module used to compare several external SQI implementations. The current
+   codebase only maintains the NeuroKit2- and custom-based estimators used by the
+   active PPG processing pipeline, so this wrapper now exposes those methods using
+   the same result shape consumed by SQI comparison scripts.
+
+   I would choose these five:
+
+   templatematch
+   Excellent beat morphology metric.
+   Sensitive to motion artifacts and distorted pulses.
+   ho2025
+   Completely different principle.
+   Measures consistency between two independent beat detectors.
+   Good for identifying erroneous peak detections.
+   entropy
+   Captures randomness and irregularity.
+   Detects noisy segments that may still have plausible morphology.
+   perfusion
+   Measures physiological signal strength (AC/DC ratio).
+   Useful when contact pressure or peripheral perfusion changes.
+   relative_power
+   Frequency-domain measure.
+   Detects broadband noise and loss of cardiac spectral content.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   features.estimate_sqi_using_external_libraries.NEUROKIT_METHOD_QUALITIES
+   features.estimate_sqi_using_external_libraries.SCRIPT_DIR
+   features.estimate_sqi_using_external_libraries.PROJECT_ROOT
+   features.estimate_sqi_using_external_libraries.logger
+   features.estimate_sqi_using_external_libraries.fs
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   features.estimate_sqi_using_external_libraries._format_result
+   features.estimate_sqi_using_external_libraries._safe_run_estimator
+   features.estimate_sqi_using_external_libraries.estimate_sqi_neurokit
+   features.estimate_sqi_using_external_libraries.old_estimate_sqi_neurokit
+   features.estimate_sqi_using_external_libraries.estimate_sqi_custom
+   features.estimate_sqi_using_external_libraries.run_all_sqi_estimators
+
+
+Module Contents
+---------------
+
+.. py:data:: NEUROKIT_METHOD_QUALITIES
+   :value: ['templatematch', 'ho2025', 'entropy']
+
+
+.. py:data:: SCRIPT_DIR
+
+.. py:data:: PROJECT_ROOT
+
+.. py:function:: _format_result(name: str, sqi_for_each_signal_sample: numpy.ndarray) -> dict[str, Any]
+
+.. py:function:: _safe_run_estimator(ppg: numpy.ndarray, fs: int, name: str, estimator: Callable[[numpy.ndarray, int], numpy.ndarray]) -> dict[str, Any] | None
+
+   Execute an SQI estimator safely.
+
+   Performs:
+     - exception handling
+     - shape validation
+     - finite-value validation
+     - range clipping
+     - result formatting
+
+
+.. py:data:: logger
+
+.. py:function:: estimate_sqi_neurokit(ppg: numpy.ndarray, fs: int, method_quality: str = 'templatematch') -> dict[str, Any] | None
+
+   Estimate a sample-wise SQI using NeuroKit.
+
+   For NeuroKit methods that require both a filtered and a raw signal
+   (currently 'perfusion' and 'relative_power'), this wrapper passes the
+   available signal as both inputs. This is a pragmatic workaround when
+   the original raw signal is unavailable.
+
+
+.. py:function:: old_estimate_sqi_neurokit(ppg: numpy.ndarray, fs: int, method_quality: str = 'templatematch') -> dict[str, Any] | None
+
+.. py:function:: estimate_sqi_custom(ppg: numpy.ndarray, fs: int) -> dict[str, Any] | None
+
+.. py:function:: run_all_sqi_estimators(ppg: numpy.ndarray, fs: int) -> list[dict[str, Any]]
+
+.. py:data:: fs
+   :value: 60
+
+

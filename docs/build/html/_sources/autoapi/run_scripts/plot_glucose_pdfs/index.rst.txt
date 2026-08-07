@@ -1,0 +1,52 @@
+run_scripts.plot_glucose_pdfs
+=============================
+
+.. py:module:: run_scripts.plot_glucose_pdfs
+
+.. autoapi-nested-parse::
+
+   Plot probability density functions (PDFs) of glucose values from different datasets.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   run_scripts.plot_glucose_pdfs.use_histograms
+   run_scripts.plot_glucose_pdfs.files
+   run_scripts.plot_glucose_pdfs.colors
+   run_scripts.plot_glucose_pdfs.datasets
+   run_scripts.plot_glucose_pdfs.df
+   run_scripts.plot_glucose_pdfs.all_values
+   run_scripts.plot_glucose_pdfs.bins
+   run_scripts.plot_glucose_pdfs.x
+   run_scripts.plot_glucose_pdfs.legend_elements
+
+
+Module Contents
+---------------
+
+.. py:data:: use_histograms
+   :value: False
+
+
+.. py:data:: files
+
+.. py:data:: colors
+
+.. py:data:: datasets
+
+.. py:data:: df
+   :value: None
+
+
+.. py:data:: all_values
+
+.. py:data:: bins
+
+.. py:data:: x
+
+.. py:data:: legend_elements
+

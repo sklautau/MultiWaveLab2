@@ -1,0 +1,103 @@
+datasets_util.util_visualize_plots
+==================================
+
+.. py:module:: datasets_util.util_visualize_plots
+
+.. autoapi-nested-parse::
+
+   Utility functions for plotting.
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   datasets_util.util_visualize_plots.plot_individual_beats
+   datasets_util.util_visualize_plots.plot_input_output_waveforms
+   datasets_util.util_visualize_plots.plot_input_output_psds
+   datasets_util.util_visualize_plots.plot_rmse_matrix
+   datasets_util.util_visualize_plots.old_sorted_order_plot_rmse_matrix
+   datasets_util.util_visualize_plots.plot_signal_with_estimated_points
+   datasets_util.util_visualize_plots.plot_signal_with_sqi
+   datasets_util.util_visualize_plots.plot_only_signal_with_sqi
+   datasets_util.util_visualize_plots.plot_length_histogram
+
+
+Module Contents
+---------------
+
+.. py:function:: plot_individual_beats(signals: pandas.DataFrame, info: dict, title='Individual beats')
+
+   Plot only the 'Individual beats' panel from NeuroKit2's ppg_plot().
+
+   :param signals: Returned by nk.ppg_process().
+   :type signals: DataFrame
+   :param info: Returned by nk.ppg_process().
+   :type info: dict
+
+
+.. py:function:: plot_input_output_waveforms(input_wav, output_wav, fs, title, title1='Raw signal', title2='Processed signal')
+
+.. py:function:: plot_input_output_psds(input_wav, output_wav, fs, title, title1='Raw signal', title2='Processed signal', nperseg=None)
+
+   Plot the Power Spectral Density (PSD) of the input and output signals
+   using Welch's method.
+
+   :param input_wav: Input signal.
+   :type input_wav: ndarray
+   :param output_wav: Output signal.
+   :type output_wav: ndarray
+   :param fs: Sampling frequency (Hz).
+   :type fs: float
+   :param title: Figure title.
+   :type title: str
+   :param title1: Title for the input PSD.
+   :type title1: str, optional
+   :param title2: Title for the output PSD.
+   :type title2: str, optional
+   :param nperseg: Segment length passed to scipy.signal.welch().
+                   If None, scipy chooses an appropriate default.
+   :type nperseg: int or None, optional
+
+
+.. py:function:: plot_rmse_matrix(mse_dict, notes='')
+
+   Convert a dict { (methodA, methodB): mse_value } into a symmetric
+   RMSE matrix and plot it with annotations.
+   The detector order follows the order of appearance in the dictionary.
+
+
+.. py:function:: old_sorted_order_plot_rmse_matrix(mse_dict)
+
+   Convert a dict { (methodA, methodB): mse_value } into a symmetric
+   RMSE matrix and plot it with annotations.
+
+
+.. py:function:: plot_signal_with_estimated_points(signal, results, fs, keys_name='peaks', note='')
+
+   Plot the signal and the detected peaks from multiple detectors in subplots.
+   synchronize zoom/pan across all subplots by sharing the x-axis among them.
+   Matplotlib already has built-in support for this: all you need is to create the subplots with a shared x-axis (sharex=ax0), or use plt.subplots(..., sharex=True).
+
+
+.. py:function:: plot_signal_with_sqi(signal, results, fs, note='', min_value=0, max_value=1)
+
+   Plot SQI comparisons in two figures with three subplots each:
+   1) Time-domain waveforms (full signal, 10 s best SQI window, 10 s worst SQI window)
+   2) Frequency-domain Welch PSDs for the same three windows
+
+
+.. py:function:: plot_only_signal_with_sqi(signal, results, fs, note='', min_value=0, max_value=1)
+
+   Plot the scaled PPG signal and superimpose SQI curves
+   from multiple detectors on a SINGLE plot.
+
+
+.. py:function:: plot_length_histogram(df, key_name, bins=30)
+
+   Plot histogram of segment durations stored in df[key_name]
+   and print total value.
+
+

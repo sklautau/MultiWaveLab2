@@ -1,0 +1,82 @@
+detecting_redundancy_via_conditional_mutual_information
+=======================================================
+
+.. py:module:: detecting_redundancy_via_conditional_mutual_information
+
+.. autoapi-nested-parse::
+
+   Illustrate conditional mutual information and redundancy in feature selection,
+   now using the discrete CMI equation instead of the linear regression trick.
+
+   Sklearn `mutual_info_regression` estimates ordinary MI, not conditional MI.
+
+   Main differences between this simple code and the one that sklearn
+   MI implements:
+   `sklearn` is less arbitrary than binning, more adaptive, and usually
+   more appropriate for continuous variables. More specifically:
+
+   1. **No binning**
+
+      My simple CMI code discretizes continuous variables into bins. `sklearn`’s `mutual_info_regression` does **not** discretize continuous variables by default. It uses a **k-nearest-neighbor entropy estimator**, which is usually better for continuous data. ([Scikit-Learn][1])
+
+   2. **Adaptive local resolution**
+
+      Binning uses fixed intervals or quantiles. kNN MI estimation adapts to the local data density: dense regions get small neighborhoods; sparse regions get larger neighborhoods.
+
+   3. **Bias–variance control via `n_neighbors`**
+
+      In `sklearn`, `n_neighbors` controls the estimator smoothness. Larger values reduce variance but may increase bias. ([Scikit-Learn][1])
+
+   4. **Separate handling of continuous and discrete variables**
+
+      `sklearn` distinguishes continuous and discrete features using `discrete_features`. This matters because the estimator changes depending on the variable type. ([Scikit-Learn][1])
+
+   5. **Noise injection to break ties**
+
+      For continuous variables, `sklearn` adds very small random noise to remove repeated values, controlled by `random_state`. ([Scikit-Learn][1])
+
+   6. **Nonnegative clipping**
+
+      True MI cannot be negative, but numerical estimates can be. `sklearn` replaces negative estimates by zero. ([Scikit-Learn][1])
+
+   [1]: https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.mutual_info_regression.html"
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   detecting_redundancy_via_conditional_mutual_information.conditional_mutual_information
+   detecting_redundancy_via_conditional_mutual_information.discretize_equal_frequency
+   detecting_redundancy_via_conditional_mutual_information.conditional_mutual_information_discrete
+   detecting_redundancy_via_conditional_mutual_information.gen_example1
+   detecting_redundancy_via_conditional_mutual_information.gen_example2
+
+
+Module Contents
+---------------
+
+.. py:function:: conditional_mutual_information(x2, x3, y)
+
+.. py:function:: discretize_equal_frequency(x, n_bins=10)
+
+   Discretize a continuous variable into approximately equal-frequency bins.
+
+
+.. py:function:: conditional_mutual_information_discrete(x, y, z, n_bins=10, eps=1e-12)
+
+   Estimate I(X; Y | Z) using the discrete CMI equation.
+
+   This computes:
+
+       I(X;Y|Z) = sum p(x,y,z) log( p(x,y|z) / (p(x|z)p(y|z)) )
+
+   after discretizing x, y, and z.
+
+
+.. py:function:: gen_example1()
+
+.. py:function:: gen_example2()
+

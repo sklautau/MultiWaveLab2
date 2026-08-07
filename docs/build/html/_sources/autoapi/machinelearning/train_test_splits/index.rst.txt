@@ -1,0 +1,156 @@
+machinelearning.train_test_splits
+=================================
+
+.. py:module:: machinelearning.train_test_splits
+
+.. autoapi-nested-parse::
+
+   Manually create a pandas dataframe with the
+   following column name:
+   - participant_id
+   in order to split the data into disjoint sets:
+    training, validation and test sets.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   machinelearning.train_test_splits.LOW_GLC_THRESHOLD
+   machinelearning.train_test_splits.HIGH_GLC_THRESHOLD
+   machinelearning.train_test_splits.parser
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   machinelearning.train_test_splits.create_balanced_set
+   machinelearning.train_test_splits.find_missing_participant_ids
+   machinelearning.train_test_splits.convert_participant_ids
+   machinelearning.train_test_splits.__extract_participants_from_features_file
+   machinelearning.train_test_splits.features_files_from_defined_participants_lists
+   machinelearning.train_test_splits.fixed_split_for_dataset_ieb3
+   machinelearning.train_test_splits.create_random_splits_and_write_participants_list
+   machinelearning.train_test_splits.create_stratified_glc_splits_and_write_participants_list
+   machinelearning.train_test_splits.run_fixed_split_for_dataset_ieb3
+   machinelearning.train_test_splits.format_metadata
+   machinelearning.train_test_splits.run_split_with_stratified_glucose
+
+
+Module Contents
+---------------
+
+.. py:data:: LOW_GLC_THRESHOLD
+   :value: 101.42
+
+
+.. py:data:: HIGH_GLC_THRESHOLD
+   :value: 157.88
+
+
+.. py:function:: create_balanced_set(features_set: pandas.DataFrame) -> pandas.DataFrame
+
+   # make sure that all participant IDs in test_set contribute
+   # with the same number of rows by finding the minimum number
+   # of rows per participant in the test set and excluding the
+   # lowest-quality rows from participants with more rows than the minimum
+
+    Keeps, for each participant, the rows with the highest quality_indicator values instead of arbitrarily taking the first rows. It sorts by participant_id and quality_indicator descending, then keeps the top rows up to the minimum per-participant count. If quality_indicator is missing, it now raises a clear error.
+
+
+.. py:function:: find_missing_participant_ids(df: pandas.DataFrame, participant_col: str = 'participant_id', start: int = 0) -> list[str]
+
+   Finds missing participant IDs.
+
+   Supports IDs such as:
+       ieb_03, ieb_04, ...
+       id01, id05, ...
+       1, 2, 4, 5, ...
+
+   :param start: First ID to consider when searching for missing values.
+   :type start: int
+
+   :returns: Missing participant IDs.
+   :rtype: list[str]
+
+
+.. py:function:: convert_participant_ids(df: pandas.DataFrame) -> pandas.DataFrame
+
+   Converts participant IDs to a consistent format.
+   It converts from #001 to hu_01, #002 to hu_02, etc.
+   :returns: Dataframe with converted participant IDs.
+   :rtype: pd.DataFrame
+
+
+.. py:function:: __extract_participants_from_features_file(dataframe, list_of_participant_ids) -> pandas.DataFrame
+
+.. py:function:: features_files_from_defined_participants_lists(datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> None
+
+.. py:function:: fixed_split_for_dataset_ieb3(datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> None
+
+.. py:function:: create_random_splits_and_write_participants_list(output_folder: str, df: pandas.DataFrame, train_pct: float = 0.7, val_pct: float = 0.15, test_pct: float = 0.15, random_state: int = 42) -> None
+
+   Splits participants into train/validation/test sets based on percentages.
+
+   :param datasetConfig: config object with output path
+   :param df: dataframe containing a 'participant_id' column
+   :param train_pct: must sum to 1.0
+   :param val_pct: must sum to 1.0
+   :param test_pct: must sum to 1.0
+   :param random_state: for reproducibility
+
+
+.. py:function:: create_stratified_glc_splits_and_write_participants_list(output_folder: str, df: pandas.DataFrame, train_pct: float = 0.7, val_pct: float = 0.15, test_pct: float = 0.15, random_state: int = 42, low_threshold: float = 70.0, high_threshold: float = 180.0, participant_col: str = 'participant_id', glc_col: str = 'GLC', aggregation: str = 'median') -> None
+
+   Splits participants into train/validation/test sets disjoint by participant_id,
+   stratified by glucose class derived from GLC.
+
+   Glucose classes:
+       low    : GLC < low_threshold
+       normal : low_threshold <= GLC <= high_threshold
+       high   : GLC > high_threshold
+
+   Since each participant may have many GLC samples, one participant-level GLC
+   value is first computed using aggregation, e.g., median or mean.
+
+   :param output_folder: Folder where participant lists will be written.
+   :type output_folder: str
+   :param df: Dataframe containing participant_id and GLC columns.
+   :type df: pd.DataFrame
+   :param train_pct: Split percentages. Must sum to 1.
+   :type train_pct: float
+   :param val_pct: Split percentages. Must sum to 1.
+   :type val_pct: float
+   :param test_pct: Split percentages. Must sum to 1.
+   :type test_pct: float
+   :param random_state: Random seed for reproducibility.
+   :type random_state: int
+   :param low_threshold: Threshold below which glucose is classified as low.
+   :type low_threshold: float
+   :param high_threshold: Threshold above which glucose is classified as high.
+   :type high_threshold: float
+   :param participant_col: Name of the participant ID column.
+   :type participant_col: str
+   :param glc_col: Name of the glucose column.
+   :type glc_col: str
+   :param aggregation: Participant-level GLC aggregation: "median" or "mean".
+   :type aggregation: str
+
+
+.. py:function:: run_fixed_split_for_dataset_ieb3(datasetConfig)
+
+.. py:function:: format_metadata(df: pandas.DataFrame) -> pandas.DataFrame
+
+   Ensures that the dataframe has a column named 'participant_id'.
+   If it has a column named 'participant', it renames it to 'participant_id'.
+   Raises an error if neither column is present.
+
+
+.. py:function:: run_split_with_stratified_glucose(datasetConfig)
+
+.. py:data:: parser
+

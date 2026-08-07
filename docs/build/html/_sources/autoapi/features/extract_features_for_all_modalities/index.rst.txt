@@ -1,0 +1,143 @@
+features.extract_features_for_all_modalities
+============================================
+
+.. py:module:: features.extract_features_for_all_modalities
+
+.. autoapi-nested-parse::
+
+   Multimodal machine learning for physiological signals.
+   Modality-aware with support for: ECG, PPG and Bioimpedance.
+
+   New strategy to extract features from set:
+   For each segment in given dataframe, extract the feature based on its modality.
+   Then, create a new dataframe for each modality (three dataframes in current
+   case), with the extracted features,
+   such that they can have the same columns, and where each row has the
+   corresponding feature values. Include in each row, all important information,
+   such as patient_id, quality_indicator, segment ID, etc, so that we can later merge the dataframes based
+   on these columns, and have a concatenaded dataframe with all features for each segment,
+   which can then be used for machine learning.
+
+   # Set command line argument to True to use fixed-duration windows (e.g., 5 seconds) instead of variable-duration segments.
+   USE_FIXED_DURATION_WINDOWS = True or False
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   features.extract_features_for_all_modalities.WAVEFORM_ID
+   features.extract_features_for_all_modalities.RAISE_EXCEPTION_ON_PPG_PROCESSING
+   features.extract_features_for_all_modalities.parser
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   features.extract_features_for_all_modalities.convert_features_of_each_glucose_measurement_to_single_vector
+   features.extract_features_for_all_modalities.convert_features_of_each_fileid_to_single_vector
+   features.extract_features_for_all_modalities.parse_bool_arg
+   features.extract_features_for_all_modalities.extract_features_for_segment
+   features.extract_features_for_all_modalities._append_metadata_to_features
+   features.extract_features_for_all_modalities.build_modality_dataframes
+   features.extract_features_for_all_modalities.clean_and_save_modality_dataframes
+   features.extract_features_for_all_modalities.make_sure_mandatory_columns_exist
+
+
+Module Contents
+---------------
+
+.. py:data:: WAVEFORM_ID
+   :value: 'filtered'
+
+
+.. py:data:: RAISE_EXCEPTION_ON_PPG_PROCESSING
+   :value: True
+
+
+   
+
+
+
+   METADATA_COLUMNS = [
+       "participant_id",
+       "start_sample",
+       "duration",
+       "session_id",
+       "datetime",
+       "file_id",
+       "modality",
+       "segment_id",
+       "quality_indicator",
+       "GLC"
+   ]
+   METADATA_COLUMNS = [line.strip() for line in open(
+       "../input_ieb1/metadata/metadata_columns.txt").read().splitlines()[1:]]
+
+.. py:function:: convert_features_of_each_glucose_measurement_to_single_vector(df: pandas.DataFrame, metadata_columns: list[str]) -> pandas.DataFrame
+
+   Convert features of each group of (participant, session, date-time), which
+   correspond to a group that has a distinct glocuse measurement,
+   into a single vector by aggregating features.
+
+   :param df: DataFrame containing features and metadata.
+   :param metadata_columns: List of metadata columns to retain.
+
+   :returns: DataFrame with aggregated features for each group.
+
+
+.. py:function:: convert_features_of_each_fileid_to_single_vector(df: pandas.DataFrame, metadata_columns: list[str]) -> pandas.DataFrame
+
+   Convert features of each participant into a single vector by aggregating features.
+
+   :param df: DataFrame containing features and metadata.
+   :param metadata_columns: List of metadata columns to retain.
+
+   :returns: DataFrame with aggregated features for each participant.
+
+
+.. py:function:: parse_bool_arg(value: str) -> bool
+
+   Parse common string representations of booleans.
+
+
+.. py:function:: extract_features_for_segment(row: pandas.Series, fs_dict: Dict[str, int], datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> Any
+
+   Extract features for a single segment based on its modality.
+
+   :param row: A row from segments dataframe with segment info
+   :param fs_dict: Sampling rates dict {"ecg": 250, "ppg": 100, "bioimp": 50}
+   :param datasetConfig: Dataset configuration object
+
+   :returns: Dictionary with extracted features
+
+
+.. py:function:: _append_metadata_to_features(features: Any, segment_metadata: Dict[str, Any]) -> list[Dict[str, Any]]
+
+   Attach metadata to a dict or a list of per-pulse dicts.
+
+
+.. py:function:: build_modality_dataframes(segmentManager: segments.segments_core.SegmentManager, fs_dict: Dict[str, int], datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> Tuple[pandas.DataFrame, pandas.DataFrame, pandas.DataFrame]
+
+   Extract a single feature vector for each segment provided by
+   SegmentManager and create separate dataframes per modality.
+
+   :returns: Tuple of (df_ecg, df_ppg, df_bioimp)
+
+
+.. py:function:: clean_and_save_modality_dataframes(df_ecg: pandas.DataFrame, df_ppg: pandas.DataFrame, df_bioimp: pandas.DataFrame, datasetConfig: datasets_util.naming_conventions.DatasetConfig)
+
+   Clean and save modality-specific dataframes to CSV files.
+
+
+.. py:function:: make_sure_mandatory_columns_exist(df: pandas.DataFrame) -> pandas.DataFrame
+
+   Ensure that mandatory columns exist in the dataframe.
+
+
+.. py:data:: parser
+

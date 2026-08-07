@@ -1,0 +1,325 @@
+datasets_util.naming_conventions
+================================
+
+.. py:module:: datasets_util.naming_conventions
+
+.. autoapi-nested-parse::
+
+   Utilities to read and write SigMF files.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   datasets_util.naming_conventions.LOGIDENTIFIER
+   datasets_util.naming_conventions.MANDATORY_METADATA_COLUMNS
+   datasets_util.naming_conventions.file
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   datasets_util.naming_conventions.DatasetConfig
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   datasets_util.naming_conventions.create_dataset_info
+   datasets_util.naming_conventions.save_dataset_init_dic
+   datasets_util.naming_conventions.load_dataset_init_dic
+   datasets_util.naming_conventions._path_replace_raw_folder_and_filename
+   datasets_util.naming_conventions._path_replace_extension
+   datasets_util.naming_conventions._path_replace_file_name
+   datasets_util.naming_conventions._path_replace_raw_folder
+
+
+Module Contents
+---------------
+
+.. py:data:: LOGIDENTIFIER
+   :value: 'OUTimportant_info-'
+
+
+.. py:data:: MANDATORY_METADATA_COLUMNS
+   :value: ['participant_id', 'session_id', 'datetime', 'GLC']
+
+
+.. py:class:: DatasetConfig(config: Union[Dict[str, Any], str, pathlib.Path])
+
+   .. py:attribute:: config_dictionary
+
+
+   .. py:attribute:: dataset_file
+
+
+   .. py:attribute:: simulations_output_path
+
+
+   .. py:attribute:: generated_waveforms_path
+
+
+   .. py:attribute:: segments_path
+
+
+   .. py:attribute:: events_path
+
+
+   .. py:attribute:: features_path
+
+
+   .. py:attribute:: machine_learning_path
+
+
+   .. py:attribute:: modalities
+
+
+   .. py:attribute:: _dataset_info
+      :value: None
+
+
+
+   .. py:method:: get_dataset_info_dataframe() -> pandas.DataFrame
+
+      Return the dataset info as a pandas DataFrame.
+
+
+
+   .. py:method:: get_statistics_output_folder()
+
+
+   .. py:method:: get_selected_features_file_name(train_or_test: str = '') -> str
+
+
+   .. py:method:: get_chosen_metadata_columns()
+
+
+   .. py:method:: get_segments_columns()
+
+
+   .. py:method:: get_modality_expanded_segments_columns(modality_prefixes=['ppg', 'ecg', 'bio'])
+
+      After data fusion we have extra segment columns for
+      each modality, e.g. ppg_mean, ecg_mean, bio_mean, etc.
+      This function returns the list of all segment columns with
+      the modality prefix added.
+
+
+
+   .. py:method:: get_output_log_file_name()
+
+
+   .. py:method:: get_folder_and_prefix_from_json_config_file_name()
+
+
+   .. py:method:: get_splitted_features_file_name(train_test_or_validation: str) -> str
+
+      Return the file name for the splitted features file, e.g.
+       features3_train.csv, features3_test.csv, features3_validation.csv
+       as the "new" method, or the old method with the preamble_train_test_splits, e.g.
+      features3_ieb1_manual.csv, etc.
+
+
+
+   .. py:method:: get_features_file_name(modality: Optional[str] = None) -> str
+
+
+   .. py:method:: get_relative_path(file_id: str) -> str
+
+
+   .. py:method:: get_raw_relative_path(file_id: str) -> str
+
+
+   .. py:method:: get_gen_relative_path(file_id: str, waveform_id: str, new_extension: Optional[str] = None) -> str
+
+
+   .. py:method:: get_raw_complete_path(file_id: str) -> str
+
+      Returns the path to the dataset file.
+      Call it "complete" path instead of "full" path because
+      the output can be a relative path.
+
+
+
+   .. py:method:: get_gen_complete_path(file_id: str, waveform_id: str, new_extension: Optional[str] = None) -> str
+
+      Returns the path to the dataset file.
+      Call it "complete" path instead of "full" path because
+      the output can be a relative path.
+
+
+
+   .. py:method:: get_file_id(relative_path: str) -> str
+
+      Return file_id for a given relative_path.
+      Raises KeyError if not found or not unique.
+
+
+
+   .. py:method:: get_dataset_root_path() -> str
+
+      Returns the directory containing the dataset file,
+      which corresponds to the DATASET_ROOT_PATH.
+
+
+
+   .. py:method:: get_dataset_features_path() -> str
+
+
+   .. py:method:: get_dataset_events_path() -> str
+
+
+   .. py:method:: get_dataset_segments_path() -> str
+
+
+   .. py:method:: get_dataset_machine_learning_path() -> str
+
+
+   .. py:method:: get_value(key: str, default: Any = None) -> Any
+
+
+   .. py:method:: get_ppg_fs() -> int
+
+
+   .. py:method:: get_ecg_fs() -> int
+
+
+   .. py:method:: as_init_dict() -> Dict[str, str]
+
+      Return config as plain dict (string paths)
+      to eventually initialize other classes.
+
+
+
+   .. py:method:: get_segmenter_file_name() -> str
+
+      find the used segmenter, which gives the output file name for the segments
+
+
+
+   .. py:method:: get_segments_file_name() -> str
+
+
+   .. py:method:: _pre_create_directories() -> None
+
+      Create folders if they do not exist.
+
+
+
+   .. py:method:: __load_dataset_info() -> pandas.DataFrame
+
+
+   .. py:method:: _validate() -> None
+
+      Validate that the dataset file exists and is a _dataset.csv file.
+
+
+
+.. py:function:: create_dataset_info(dataset_file: str = '../original_data/raw/mysignals_dataset.csv', base_generated_path: str = '../output_folder/mydataset/', ppg_fs: int = 500, ecg_fs: int = 500) -> Dict[str, str]
+
+   Builds a standardized dataset configuration dictionary from folders.
+
+
+.. py:function:: save_dataset_init_dic(filename: str, my_dict: Dict[str, Any]) -> None
+
+.. py:function:: load_dataset_init_dic(filename: str) -> Dict[str, Any]
+
+.. py:function:: _path_replace_raw_folder_and_filename(input_filename: str, root_dir: str, output_folder: str, output_suffix: str, new_extension: Optional[str] = None) -> str
+
+.. py:function:: _path_replace_extension(input_filename: str, new_extension: str) -> str
+
+.. py:function:: _path_replace_file_name(input_filename: str, output_suffix: str, new_extension: Optional[str] = None) -> str
+
+   Replace the file name of a given path with a new suffix and optional extension.
+
+   :param input_filename: The path to the file to be modified.
+   :type input_filename: str
+   :param output_suffix: The suffix to be appended to the file name.
+   :type output_suffix: str
+   :param new_extension: The new extension of the file (without leading dot). If None, keep the same extension.
+   :type new_extension: str, optional
+
+   :returns: The modified path with the new suffix and optional extension.
+   :rtype: str
+
+
+.. py:function:: _path_replace_raw_folder(input_filename: str, root_dir: str, output_folder: str) -> str
+
+   Construct an output file path by preserving the relative directory structure
+   of an input file with respect to a given root directory, and
+   redirecting the result to a target output folder.
+
+   This version fully supports relative paths and does NOT convert them to absolute
+   paths. All outputs remain consistent with the input path type (relative in,
+   relative out).
+
+   Processing steps:
+   1) Normalize paths using os.path.normpath (no absolute conversion)
+   2) Compute the relative path from root_dir to input_filename
+   3) Validate that the result does not escape root_dir (no ".." prefix)
+   4) Recreate the relative directory structure inside output_folder
+   5) Return the final output path
+
+   :param input_filename: Path to the input file (relative or absolute).
+   :type input_filename: str
+   :param root_dir: Root directory used as reference for relative path computation.
+                    Must be consistent (both relative or both absolute) with input_filename.
+   :type root_dir: str
+   :param output_folder: Base directory where output files will be stored.
+                         Will preserve relative/absolute nature.
+   :type output_folder: str
+
+   :returns: Output file path with preserved structure and updated extension.
+   :rtype: str
+
+   :raises ValueError: If input_filename is not inside root_dir.
+
+   .. rubric:: Example
+
+   Inputs:
+
+       input_filename = "./data/raw/session1/file1.wav"
+       root_dir      = "./data/raw"
+       output_folder = "./data/processed"
+
+   Step-by-step:
+
+       1) Normalize (no absolute conversion):
+          input_filename -> "data/raw/session1/file1.wav"
+          root_dir      -> "data/raw"
+
+       2) Compute relative path:
+          rel_path = "session1/file1.wav"
+
+       3) Validate containment:
+          OK (does not start with "..")
+
+       4) Extract directory:
+          rel_dir = "session1"
+
+       5) Construct output directory:
+          out_dir = "data/processed/session1"
+
+       6) Final output:
+          "data/processed/session1/file1.sigmf-data"
+
+   .. rubric:: Notes
+
+   - No conversion to absolute paths is performed.
+   - The function assumes input_filename and root_dir are both relative
+     or both absolute; mixing them may lead to incorrect results.
+   - Containment is enforced by checking that the relative path does not
+     start with "..".
+
+
+.. py:data:: file
+   :value: '..\\input_ieb1\\config_experiment1_ieb1.json'
+
+

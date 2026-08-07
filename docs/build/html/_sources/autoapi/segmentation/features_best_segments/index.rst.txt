@@ -1,0 +1,82 @@
+segmentation.features_best_segments
+===================================
+
+.. py:module:: segmentation.features_best_segments
+
+.. autoapi-nested-parse::
+
+   Multimodal machine learning for physiological signals.
+   Modality-aware: ECG ≠ PPG ≠ Bioimp
+   Robust to missing modalities
+   Low leakage risk (no direct use of labels like GLC in features)
+   Compatible with tabular ML + deep learning
+
+   Strategy to deal with multiple segments per modality:
+   A group is defined as all records for a specific participant/session/datetime combination.
+   Then, for each group the best segment per modality is selected based on quality,
+   and features are extracted from those segments.
+
+   [ METADATA | ECG | PPG | BIOIMP | CROSS_MODAL | QUALITY ]
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   segmentation.features_best_segments.WAVEFORM_ID
+   segmentation.features_best_segments.BEST_SEGMENTS_INFO_FILE
+   segmentation.features_best_segments.MULTIMODAL_FEATURES_FILE
+   segmentation.features_best_segments.INPUT_ALL_SEGMENTS_FILE
+   segmentation.features_best_segments.fs_dict
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   segmentation.features_best_segments.extract_features_from_group
+   segmentation.features_best_segments.build_feature_dataset
+   segmentation.features_best_segments.best_segment_per_group
+
+
+Module Contents
+---------------
+
+.. py:data:: WAVEFORM_ID
+   :value: 'filtered'
+
+
+.. py:data:: BEST_SEGMENTS_INFO_FILE
+   :value: 'best_segments_info.csv'
+
+
+.. py:data:: MULTIMODAL_FEATURES_FILE
+   :value: 'multimodal_features.csv'
+
+
+.. py:data:: INPUT_ALL_SEGMENTS_FILE
+   :value: 'all_segments_with_quality.csv'
+
+
+.. py:function:: extract_features_from_group(dataframe: pandas.DataFrame, fs_dict: Dict[str, int], datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> Dict[str, Any]
+
+   dataframe: A DataFrame with one row per modality for a specific participant/session/datetime combination
+   fs_dict: {"ecg": 250, "ppg": 100, "bioimp": 50}
+
+
+.. py:function:: build_feature_dataset(segmentManager: datasets_util.segments.SegmentManager, fs_dict: Dict[str, int], datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> (pandas.DataFrame, pandas.DataFrame)
+
+   Extract features for each session, using only the best quality segment for each modality.
+
+
+.. py:function:: best_segment_per_group(segmentManager: datasets_util.segments.SegmentManager, datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> pandas.DataFrame
+
+   Create a new dataframe with one row per participant/session/datetime combination,
+   containing only the best quality segment for each modality.
+
+
+.. py:data:: fs_dict
+

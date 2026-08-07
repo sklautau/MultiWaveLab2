@@ -1,0 +1,103 @@
+signal_processing.ieb1_sqi_dataframe_creation
+=============================================
+
+.. py:module:: signal_processing.ieb1_sqi_dataframe_creation
+
+.. autoapi-nested-parse::
+
+   This is valid only for IEB1 dataset, which has a specific folder structure and naming convention.
+
+   Get files from:
+   ..\ufsc-bgl-based\Dataset_IEB\sqi_signals
+   named
+   #001_sqi_signal.csv
+   #002_sqi_signal.csv
+   ...
+   and combine them into a single dataframe with all columns
+
+   and also get single file
+   ..\ufsc-bgl-based\Dataset_IEB\window_debug_report_with_sqi_signal.csv
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   signal_processing.ieb1_sqi_dataframe_creation.INPUT_FOLDER
+   signal_processing.ieb1_sqi_dataframe_creation.FILE_NAME_SUFFIX
+   signal_processing.ieb1_sqi_dataframe_creation.OTHER_FILE_NAME
+   signal_processing.ieb1_sqi_dataframe_creation.SCRIPT_DIR
+   signal_processing.ieb1_sqi_dataframe_creation.PROJECT_ROOT
+   signal_processing.ieb1_sqi_dataframe_creation.parser
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   signal_processing.ieb1_sqi_dataframe_creation.load_binary_vectors
+   signal_processing.ieb1_sqi_dataframe_creation._plot_two_ppgs
+   signal_processing.ieb1_sqi_dataframe_creation._results_to_dataframe
+   signal_processing.ieb1_sqi_dataframe_creation._read_ppg_for_comparison
+   signal_processing.ieb1_sqi_dataframe_creation.add_new_columns_with_sqis_sum
+   signal_processing.ieb1_sqi_dataframe_creation.calculate_and_save_sqis
+
+
+Module Contents
+---------------
+
+.. py:data:: INPUT_FOLDER
+   :value: '..\\ufsc-bgl-based\\Dataset_IEB\\sqi_signals'
+
+
+.. py:data:: FILE_NAME_SUFFIX
+   :value: '_sqi_signal.csv'
+
+
+.. py:data:: OTHER_FILE_NAME
+   :value: '..\\ufsc-bgl-based\\Dataset_IEB\\window_debug_report_with_sqi_signal.csv'
+
+
+.. py:data:: SCRIPT_DIR
+
+.. py:data:: PROJECT_ROOT
+
+.. py:function:: load_binary_vectors(csv_file)
+
+   Load a CSV containing columns of binary vectors with different lengths.
+
+   :returns: Dictionary where the keys are the column names and the values
+             are NumPy arrays containing only the original vector elements.
+   :rtype: dict
+
+
+.. py:function:: _plot_two_ppgs(ppg1: numpy.ndarray, ppg2: numpy.ndarray, fs: int, note: str = '') -> None
+
+   Plot two PPG signals for visual comparison.
+
+
+.. py:function:: _results_to_dataframe(results: list[dict[str, Any]]) -> pandas.DataFrame
+
+   Convert SQI estimator outputs to a sample-wise DataFrame.
+
+
+.. py:function:: _read_ppg_for_comparison(dataset_config: datasets_util.naming_conventions.DatasetConfig, file_id: str, required_ppg_fs: int, pipeline: str = 'filtered') -> tuple[numpy.ndarray, str]
+
+   Load preferred PPG input for SQI comparison.
+
+   Prefer already-generated filtered waveform. If it does not exist, read raw
+   SigMF and run the same filtering used in the current PPG pipeline.
+
+
+.. py:function:: add_new_columns_with_sqis_sum(df: pandas.DataFrame, output_filename: str) -> pandas.DataFrame
+
+   Add new columns to the DataFrame with the sum of SQI values for each row.
+
+
+.. py:function:: calculate_and_save_sqis(dataset_config_file: str, should_show: bool = False) -> pandas.DataFrame
+
+.. py:data:: parser
+

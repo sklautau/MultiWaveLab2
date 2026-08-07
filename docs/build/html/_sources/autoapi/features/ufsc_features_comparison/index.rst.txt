@@ -1,0 +1,123 @@
+features.ufsc_features_comparison
+=================================
+
+.. py:module:: features.ufsc_features_comparison
+
+.. autoapi-nested-parse::
+
+   Compares our PPG feature extraction with the features
+   extracted at UFSC.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   features.ufsc_features_comparison.WAVEFORM_ID
+   features.ufsc_features_comparison.RAISE_EXCEPTION_ON_PPG_PROCESSING
+   features.ufsc_features_comparison.REQUIRED_FS
+   features.ufsc_features_comparison.FEATURES_FILE_FOR_COMPARISON
+   features.ufsc_features_comparison.SEGMENTS_FILE_FOR_COMPARISON
+   features.ufsc_features_comparison.METADATA_COLUMNS
+   features.ufsc_features_comparison.df_comparison
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   features.ufsc_features_comparison.compare_dataframes_by_column_name
+   features.ufsc_features_comparison.read_file_and_get_features
+   features.ufsc_features_comparison._append_metadata_to_features
+   features.ufsc_features_comparison.build_ppg_dataframe
+   features.ufsc_features_comparison.obtain_ufsc_features_and_save
+
+
+Module Contents
+---------------
+
+.. py:data:: WAVEFORM_ID
+   :value: 'filtered'
+
+
+.. py:data:: RAISE_EXCEPTION_ON_PPG_PROCESSING
+   :value: True
+
+
+.. py:data:: REQUIRED_FS
+   :value: 60
+
+
+.. py:data:: FEATURES_FILE_FOR_COMPARISON
+   :value: '..\\tcc_guilherme\\files\\dataRecord_spectrogram_v5.csv'
+
+
+.. py:data:: SEGMENTS_FILE_FOR_COMPARISON
+   :value: '..\\tcc_guilherme\\good_segments.csv'
+
+
+   
+
+
+
+   METADATA_COLUMNS = [
+       "participant_id",
+       "session_id",
+       "datetime",
+       "file_id",
+       "modality",
+       "segment_id",
+       "window_id",
+       "quality_indicator",
+       "GLC"
+   ]
+
+.. py:data:: METADATA_COLUMNS
+
+.. py:function:: compare_dataframes_by_column_name(df1: pandas.DataFrame, df2: pandas.DataFrame, *, rtol: float = 1e-05, atol: float = 1e-08, equal_nan: bool = True) -> dict
+
+   Compare two pandas DataFrames by matching columns with the same names,
+   regardless of column order.
+
+   Returns a dictionary with:
+     - columns_only_in_df1
+     - columns_only_in_df2
+     - matched_columns
+     - shape_info
+     - comparison_per_column
+     - all_matched_columns_equal
+
+
+.. py:function:: read_file_and_get_features(row: pandas.Series, fs: float, datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> Optional[Dict[str, Any] | list[Dict[str, Any]]]
+
+   Extract features for a single segment.
+
+   :param row: A row from segments dataframe with segment info
+   :param fs: Sampling rate
+   :param datasetConfig: Dataset configuration object
+
+   :returns: Dictionary with extracted features
+
+
+.. py:function:: _append_metadata_to_features(features: Any, segment_metadata: Dict[str, Any]) -> list[Dict[str, Any]]
+
+   Attach metadata to a dict or to each dict in a list of per-pulse features.
+
+
+.. py:function:: build_ppg_dataframe(segmentManager: segments.segments_core.SegmentManager, datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> pandas.DataFrame
+
+   Extract features.
+
+
+.. py:function:: obtain_ufsc_features_and_save()
+
+   Obtain UFSC features and save them.
+
+
+.. py:data:: df_comparison
+   :value: None
+
+

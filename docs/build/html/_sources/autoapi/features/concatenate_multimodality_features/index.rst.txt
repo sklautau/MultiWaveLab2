@@ -1,0 +1,112 @@
+features.concatenate_multimodality_features
+===========================================
+
+.. py:module:: features.concatenate_multimodality_features
+
+.. autoapi-nested-parse::
+
+   Concatenate multimodality features into a single machine learning dataset.
+
+   1) First, using the procedure of clean_features_dataframe.py,
+   clean the features DataFrame by removing rows and columns with NaN
+   or inf values. In the end, this will define the columns that will be used
+   in the output concatenated DataFrame.
+   2) Then use the following strategy to concatenate features creating
+   a multimodal row, considering that number of features may differ among
+   the modalities and that some features may be missing for some files:
+       2.1) For each group of participant_id, session_id, time_date, count how
+       many features are available for each modality. The largest number Nmax will
+       dictate how many rows will be created for that group. For example, if for
+       a given group there are Nmax=6 features for PPG, 3 for ECG and 1 for bioimpedance,
+       then Nmax=6 rows will be created for that group, with the available features for each modality.
+       2.2) Create each row such that all modalities contribute with Nmax features,
+       by repeating features as needed. For example, if for a given group there are Nmax=6 features for PPG, 3 for ECG and 1 for bioimpedance, then the 3 ECG features will be repeated twice and the 1 bioimpedance
+       feature will be repeated 6 times to create 6 rows for that group.
+       2.3) Count and indicate to stdout the case in which a group has no features for a modality, and
+       skip that group, since it will not contribute to the machine learning model.
+   3) Save a single DataFrame csv with concatenated features and all available metadata (participant_id, session_id, time_date, etc.) for all files.
+   4) Save another DataFrame csv with only the columns needed for machine learning, such as X, y, where y is the glucose GLC.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   features.concatenate_multimodality_features.OUTPUT_MULTIMODAL_FEATURES_FILE
+   features.concatenate_multimodality_features.OUTPUT_MULTIMODAL_WITHOUT_METADATA_FILE
+   features.concatenate_multimodality_features.ML_EXCLUDED_COLUMNS
+   features.concatenate_multimodality_features.SOME_METADATA_COLUMNS
+   features.concatenate_multimodality_features.dataset_config_file
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   features.concatenate_multimodality_features.clean_by_removing_nan
+   features.concatenate_multimodality_features.load_modality_dataframes
+   features.concatenate_multimodality_features.get_feature_columns
+   features.concatenate_multimodality_features.repeat_features
+   features.concatenate_multimodality_features.concatenate_modality_features
+   features.concatenate_multimodality_features.save_concatenated_features
+
+
+Module Contents
+---------------
+
+.. py:data:: OUTPUT_MULTIMODAL_FEATURES_FILE
+   :value: 'multimodal_features_with_metadata.csv'
+
+
+.. py:data:: OUTPUT_MULTIMODAL_WITHOUT_METADATA_FILE
+   :value: 'multimodal_features_ml.csv'
+
+
+.. py:data:: ML_EXCLUDED_COLUMNS
+   :value: ['ecg_sqi', 'quality_indicator']
+
+
+.. py:data:: SOME_METADATA_COLUMNS
+   :value: ['participant_id', 'session_id', 'datetime', 'GLC']
+
+
+.. py:function:: clean_by_removing_nan(df: pandas.DataFrame, modality: str) -> pandas.DataFrame
+
+   Clean a modality-specific dataframe by removing rows/columns with NaN/inf values.
+   Drop columns that are not relevant for ML.
+
+
+.. py:function:: load_modality_dataframes(datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> Tuple[pandas.DataFrame, pandas.DataFrame, pandas.DataFrame]
+
+   Load and clean dataframes for each modality.
+
+
+.. py:function:: get_feature_columns(df: pandas.DataFrame) -> List[str]
+
+   Get feature columns (excluding metadata).
+
+
+.. py:function:: repeat_features(df: pandas.DataFrame, n_times: int) -> pandas.DataFrame
+
+   Repeat rows n_times by cycling through them.
+
+
+.. py:function:: concatenate_modality_features(df_ecg: pandas.DataFrame, df_ppg: pandas.DataFrame, df_bioimp: pandas.DataFrame) -> pandas.DataFrame
+
+   Concatenate features from all modalities using the specified strategy.
+
+
+.. py:function:: save_concatenated_features(df_concatenated: pandas.DataFrame, datasetConfig: datasets_util.naming_conventions.DatasetConfig) -> Tuple[str, str]
+
+   Save concatenated features to two CSV files:
+   1. Full dataframe with all metadata and features
+   2. ML-ready dataframe with X and y (where y=GLC)
+
+
+.. py:data:: dataset_config_file
+   :value: 'multimodal_dataset_folders.json'
+
+

@@ -1,0 +1,23 @@
+machinelearning
+===============
+
+.. py:module:: machinelearning
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/machinelearning/dimensionality_reduction/index
+   /autoapi/machinelearning/feature_selection_for_regression/index
+   /autoapi/machinelearning/loso_for_ieb2/index
+   /autoapi/machinelearning/loso_results_inspection/index
+   /autoapi/machinelearning/modality_importance_study/index
+   /autoapi/machinelearning/models_definition/index
+   /autoapi/machinelearning/regression/index
+   /autoapi/machinelearning/regression_evaluation/index
+   /autoapi/machinelearning/train_test_splits/index
+
+

@@ -1,0 +1,34 @@
+run_scripts.features_csv_statistics
+===================================
+
+.. py:module:: run_scripts.features_csv_statistics
+
+.. autoapi-nested-parse::
+
+   From command line, read a csv pandas file and
+   provide statistics about the number of features for each modality (ECG, PPG, Bioimpedance),
+   such as:
+   Number of ECG features: 0
+   Number of PPG features: 20
+   Number of Bioimpedance features: 0
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   run_scripts.features_csv_statistics.segments_metadata
+   run_scripts.features_csv_statistics.parser
+
+
+Module Contents
+---------------
+
+.. py:data:: segments_metadata
+   :value: ['segment_id', 'file_id', 'modality', 'start_sample', 'duration', 'quality_indicator']
+
+
+.. py:data:: parser
+

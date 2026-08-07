@@ -1,0 +1,30 @@
+signal_processing.cross_features
+================================
+
+.. py:module:: signal_processing.cross_features
+
+.. autoapi-nested-parse::
+
+   @TODO: move this code to other file.
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   signal_processing.cross_features.safe_mean
+   signal_processing.cross_features.safe_std
+   signal_processing.cross_features.extract_cross_features
+
+
+Module Contents
+---------------
+
+.. py:function:: safe_mean(x: numpy.ndarray) -> numpy.floating
+
+.. py:function:: safe_std(x: numpy.ndarray) -> numpy.floating
+
+.. py:function:: extract_cross_features(ecg_peaks: numpy.ndarray, ppg_peaks: numpy.ndarray, fs: int) -> Dict[str, float]
+

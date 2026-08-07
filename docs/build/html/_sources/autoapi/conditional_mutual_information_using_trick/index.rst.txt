@@ -1,0 +1,69 @@
+conditional_mutual_information_using_trick
+==========================================
+
+.. py:module:: conditional_mutual_information_using_trick
+
+.. autoapi-nested-parse::
+
+   Illustrate conditional mutual information and redundancy in feature selection,
+   using the trick of removing the linear effect of a selected feature from both the target and the candidate feature.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   conditional_mutual_information_using_trick.n
+   conditional_mutual_information_using_trick.z
+   conditional_mutual_information_using_trick.y
+   conditional_mutual_information_using_trick.x2
+   conditional_mutual_information_using_trick.x3
+   conditional_mutual_information_using_trick.corr_x2_y
+   conditional_mutual_information_using_trick.corr_x3_y
+   conditional_mutual_information_using_trick.mi_x2_y
+   conditional_mutual_information_using_trick.mi_x3_y
+   conditional_mutual_information_using_trick.model_y_given_x2
+   conditional_mutual_information_using_trick.y_residual
+   conditional_mutual_information_using_trick.model_x3_given_x2
+   conditional_mutual_information_using_trick.x3_residual
+   conditional_mutual_information_using_trick.partial_corr
+   conditional_mutual_information_using_trick.conditional_mi_approx
+
+
+Module Contents
+---------------
+
+.. py:data:: n
+   :value: 3000
+
+
+.. py:data:: z
+
+.. py:data:: y
+
+.. py:data:: x2
+
+.. py:data:: x3
+
+.. py:data:: corr_x2_y
+
+.. py:data:: corr_x3_y
+
+.. py:data:: mi_x2_y
+
+.. py:data:: mi_x3_y
+
+.. py:data:: model_y_given_x2
+
+.. py:data:: y_residual
+
+.. py:data:: model_x3_given_x2
+
+.. py:data:: x3_residual
+
+.. py:data:: partial_corr
+
+.. py:data:: conditional_mi_approx
+

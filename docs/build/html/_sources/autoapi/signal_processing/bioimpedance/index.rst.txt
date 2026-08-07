@@ -1,0 +1,182 @@
+signal_processing.bioimpedance
+==============================
+
+.. py:module:: signal_processing.bioimpedance
+
+.. autoapi-nested-parse::
+
+   Signal processing over bioimpedance data (time and frequency domain).
+
+   Rather than simply suppressing warnings, the feature extractor is made robust by construction. That means every feature should first check whether the mathematical conditions for computing it are satisfied. For example:
+   correlation: both variables must have nonzero variance;
+   polynomial fitting: enough distinct points and sufficient variation;
+   Hjorth mobility/complexity: denominator variances must be nonzero;
+   ratios: denominator must be larger than a small threshold;
+   centroid/spread: total power must be positive.
+
+   This approach avoids warnings, produces meaningful NaN values when a feature is undefined,
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   signal_processing.bioimpedance.SHOULD_PLOT
+   signal_processing.bioimpedance.APPLY_PHASE_UNWRAP
+   signal_processing.bioimpedance.MIN_SQI_MSE
+   signal_processing.bioimpedance.MAX_SQI_MSE
+   signal_processing.bioimpedance.SIGNAL_PIPELINES
+   signal_processing.bioimpedance.QUALITY_PIPELINES
+   signal_processing.bioimpedance.FEATURE_PIPELINES
+   signal_processing.bioimpedance.parser
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   signal_processing.bioimpedance._safe_array
+   signal_processing.bioimpedance._safe_stat
+   signal_processing.bioimpedance.safe_corrcoef
+   signal_processing.bioimpedance._safe_div
+   signal_processing.bioimpedance._add_basic_stats
+   signal_processing.bioimpedance.old_add_basic_stats
+   signal_processing.bioimpedance._poly_features
+   signal_processing.bioimpedance.old_bioimp_all_feature_extracion
+   signal_processing.bioimpedance.bioimp_all_feature_extracion
+   signal_processing.bioimpedance.__plot_quality
+   signal_processing.bioimpedance.__plot_raw_vs_filtered
+   signal_processing.bioimpedance.load_bioimp_file
+   signal_processing.bioimpedance._infer_axis
+   signal_processing.bioimpedance.bioimp_savitzky_waveform_processing
+   signal_processing.bioimpedance.bioimp_sqi_mse_waveform_processing
+   signal_processing.bioimpedance.bioimpedance_signal_processing_pipeline
+   signal_processing.bioimpedance.old_bioimpedance_frequency_filtering_pipeline
+   signal_processing.bioimpedance.old_bioimpedance_frequency_quality_pipeline
+   signal_processing.bioimpedance.extract_bioimp_features
+   signal_processing.bioimpedance.old_extract_bioimp_features
+
+
+Module Contents
+---------------
+
+.. py:data:: SHOULD_PLOT
+   :value: False
+
+
+.. py:data:: APPLY_PHASE_UNWRAP
+   :value: True
+
+
+.. py:data:: MIN_SQI_MSE
+   :value: 2e-06
+
+
+.. py:data:: MAX_SQI_MSE
+   :value: 0.002
+
+
+.. py:function:: _safe_array(x: numpy.ndarray) -> numpy.ndarray
+
+.. py:function:: _safe_stat(func, x: numpy.ndarray, default: float = np.nan) -> float
+
+.. py:function:: safe_corrcoef(x, y)
+
+.. py:function:: _safe_div(a: float, b: float, eps: float = 1e-12) -> float
+
+.. py:function:: _add_basic_stats(features: Dict[str, Any], prefix: str, x: numpy.ndarray) -> None
+
+.. py:function:: old_add_basic_stats(features: Dict[str, Any], prefix: str, x: numpy.ndarray) -> None
+
+.. py:function:: _poly_features(features: Dict[str, Any], prefix: str, freq: numpy.ndarray, x: numpy.ndarray) -> None
+
+.. py:function:: old_bioimp_all_feature_extracion(bioimp: numpy.ndarray, fs: int) -> Dict[str, Any]
+
+   Extract generic frequency-domain bioimpedance features.
+
+   :param bioimp: Complex-valued bioimpedance frequency response Z(f).
+                  Shape should be (n_frequencies,). Values may be complex.
+   :type bioimp: np.ndarray
+   :param fs: Sampling frequency or maximum frequency used to construct a surrogate
+              frequency axis. If the true frequency vector is available, it is better
+              to adapt this function to receive it explicitly.
+   :type fs: int
+
+   :returns: Dictionary with scalar features.
+   :rtype: Dict[str, Any]
+
+
+.. py:function:: bioimp_all_feature_extracion(bioimp: numpy.ndarray, fs: int) -> Dict[str, Any]
+
+   Extract generic frequency-domain bioimpedance features.
+
+   :param bioimp: Complex-valued bioimpedance frequency response Z(f).
+                  Shape should be (n_frequencies,). Values may be complex.
+   :type bioimp: np.ndarray
+   :param fs: Sampling frequency or maximum frequency used to construct a surrogate
+              frequency axis. If the true frequency vector is available, it is better
+              to adapt this function to receive it explicitly.
+   :type fs: int
+
+   :returns: Dictionary with scalar features.
+   :rtype: Dict[str, Any]
+
+
+.. py:function:: __plot_quality(df_raw, df_quality, modality, file_id=None)
+
+   Plots raw vs filtered magnitude and phase.
+
+   :param df_raw: original dataframe (must contain Zmag, Zphi and t or f)
+   :param df_filtered: processed dataframe (must contain mag_filtered, phase_filtered)
+   :param modality: 'bioimp'
+   :param file_id: optional (for title)
+
+
+.. py:function:: __plot_raw_vs_filtered(df_raw, df_filtered, modality, file_id=None)
+
+   Plots raw vs filtered magnitude and phase.
+
+   :param df_raw: original dataframe (must contain Zmag, Zphi and t or f)
+   :param df_filtered: processed dataframe (must contain mag_filtered, phase_filtered)
+   :param modality: 'bioimp'
+   :param file_id: optional (for title)
+
+
+.. py:function:: load_bioimp_file(path)
+
+.. py:function:: _infer_axis(df: pandas.DataFrame, modality: str) -> tuple[numpy.ndarray, str]
+
+.. py:function:: bioimp_savitzky_waveform_processing(df: pandas.DataFrame, modality: str) -> pandas.DataFrame
+
+.. py:function:: bioimp_sqi_mse_waveform_processing(df: pandas.DataFrame, modality: str) -> pandas.DataFrame
+
+.. py:function:: bioimpedance_signal_processing_pipeline(dataset_config_file: str, input_waveform_id: str, pipeline: str, output_waveform_id: str) -> None
+
+   Use this method for both waveform and SQI processing pipelines.
+
+
+.. py:function:: old_bioimpedance_frequency_filtering_pipeline(dataset_config_file: str)
+
+   Backward-compatible wrapper for bioimpedance signal processing.
+
+
+.. py:function:: old_bioimpedance_frequency_quality_pipeline(dataset_config_file: str)
+
+   Backward-compatible wrapper for bioimpedance quality processing.
+
+
+.. py:function:: extract_bioimp_features(datasetConfig: datasets_util.naming_conventions.DatasetConfig, bioimp: numpy.ndarray, fs: int) -> Dict[str, Any]
+
+.. py:function:: old_extract_bioimp_features(bioimp: numpy.ndarray, fs: int) -> Dict[str, Any]
+
+.. py:data:: SIGNAL_PIPELINES
+
+.. py:data:: QUALITY_PIPELINES
+
+.. py:data:: FEATURE_PIPELINES
+
+.. py:data:: parser
+

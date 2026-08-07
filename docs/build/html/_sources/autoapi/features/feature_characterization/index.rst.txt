@@ -1,0 +1,87 @@
+features.feature_characterization
+=================================
+
+.. py:module:: features.feature_characterization
+
+.. autoapi-nested-parse::
+
+   Feature characterization focused on per-feature behavior versus glucose.
+
+   This script intentionally does NOT perform feature selection.
+   It reads the same train input used by features/feature_selection.py:
+   datasetConfig.get_splitted_features_file_name("train").
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   features.feature_characterization.TARGET_COLUMN
+   features.feature_characterization.df
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   features.feature_characterization._detect_subject_column
+   features.feature_characterization._compute_variance_decomposition
+   features.feature_characterization._centered_pearson
+   features.feature_characterization._rm_corr
+   features.feature_characterization._safe_mutual_info
+   features.feature_characterization._auto_interpretation
+   features.feature_characterization._add_composite_score
+   features.feature_characterization._save_scatter
+   features.feature_characterization._save_metrics_heatmap
+   features.feature_characterization.characterize_features
+   features.feature_characterization.main
+   features.feature_characterization.calculate_num_unique_values
+
+
+Module Contents
+---------------
+
+.. py:data:: TARGET_COLUMN
+   :value: 'GLC'
+
+
+.. py:function:: _detect_subject_column(df: pandas.DataFrame) -> str
+
+.. py:function:: _compute_variance_decomposition(features_df: pandas.DataFrame, feature_column: str, id_column: str) -> dict
+
+.. py:function:: _centered_pearson(df: pandas.DataFrame, feature_col: str, target_col: str, subject_col: str) -> tuple[float, float]
+
+.. py:function:: _rm_corr(df: pandas.DataFrame, feature_col: str, target_col: str, subject_col: str) -> tuple[float, float]
+
+.. py:function:: _safe_mutual_info(feature: pandas.Series, target: pandas.Series, random_state: int) -> float
+
+.. py:function:: _auto_interpretation(row: pandas.Series) -> str
+
+.. py:function:: _add_composite_score(df: pandas.DataFrame) -> pandas.DataFrame
+
+.. py:function:: _save_scatter(df: pandas.DataFrame, x_col: str, y_col: str, output_file: pathlib.Path, title: str, xlabel: str, ylabel: str, annotate_top_n: int = 12) -> None
+
+.. py:function:: _save_metrics_heatmap(df: pandas.DataFrame, output_file: pathlib.Path) -> None
+
+.. py:function:: characterize_features(dataset_config: datasets_util.naming_conventions.DatasetConfig, random_state: int = 42) -> pandas.DataFrame
+
+.. py:function:: main() -> None
+
+.. py:function:: calculate_num_unique_values(df: pandas.DataFrame) -> pandas.DataFrame
+
+   Calculate the number of unique values for each feature in the DataFrame.
+
+   Parameters:
+   df (pd.DataFrame): The input DataFrame containing features.
+
+   Returns:
+   pd.DataFrame: A DataFrame with two columns: 'feature' and 'n_unique',
+                 where 'feature' is the feature name and 'n_unique' is the
+                 number of unique values for that feature.
+
+
+.. py:data:: df
+

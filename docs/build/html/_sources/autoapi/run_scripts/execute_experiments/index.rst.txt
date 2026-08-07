@@ -1,0 +1,43 @@
+run_scripts.execute_experiments
+===============================
+
+.. py:module:: run_scripts.execute_experiments
+
+.. autoapi-nested-parse::
+
+   Conveniently execute several experiments
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   run_scripts.execute_experiments.parser
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   run_scripts.execute_experiments.parse_number_ranges
+
+
+Module Contents
+---------------
+
+.. py:function:: parse_number_ranges(spec: str, unique: bool = False) -> list[int]
+
+   Parse a string such as:
+       "6,7-10,15"
+
+   into:
+       [6, 7, 8, 9, 10, 15]
+
+   :raises ValueError if the specification is invalid.:
+
+
+.. py:data:: parser
+

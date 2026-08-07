@@ -1,0 +1,25 @@
+signal_processing
+=================
+
+.. py:module:: signal_processing
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/signal_processing/bioimpedance/index
+   /autoapi/signal_processing/compare_sqi_estimators/index
+   /autoapi/signal_processing/cross_features/index
+   /autoapi/signal_processing/ecg/index
+   /autoapi/signal_processing/ieb1_sqi_dataframe_creation/index
+   /autoapi/signal_processing/ppg/index
+   /autoapi/signal_processing/ppg_features_by_ufsc/index
+   /autoapi/signal_processing/ppg_quality/index
+   /autoapi/signal_processing/pyppg_methods/index
+   /autoapi/signal_processing/signal_utils/index
+   /autoapi/signal_processing/sqi_dataframe_creation/index
+
+

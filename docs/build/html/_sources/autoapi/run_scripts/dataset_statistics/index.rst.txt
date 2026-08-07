@@ -1,0 +1,19 @@
+run_scripts.dataset_statistics
+==============================
+
+.. py:module:: run_scripts.dataset_statistics
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   run_scripts.dataset_statistics.parser
+
+
+Module Contents
+---------------
+
+.. py:data:: parser
+

@@ -1,0 +1,114 @@
+signal_processing.ppg_quality
+=============================
+
+.. py:module:: signal_processing.ppg_quality
+
+.. autoapi-nested-parse::
+
+   Methods to determine the quality of a PPG signal.
+   Neurokit2 quality (SQI) is fragile by design
+   It relies on template matching. Sensitive to:
+       noise
+       missed peaks
+       short segments
+   In practice, SQI often fails on:
+       motion-corrupted PPG
+       short windows (< ~10-15 beats)
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   signal_processing.ppg_quality.RAISE_EXCEPTION_ON_PPG_PROCESSING
+   signal_processing.ppg_quality.ppg
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   signal_processing.ppg_quality._sqi_peaks
+   signal_processing.ppg_quality._sqi_rr
+   signal_processing.ppg_quality._sqi_spectral
+   signal_processing.ppg_quality._sqi_snr
+   signal_processing.ppg_quality._compute_window_sqi
+   signal_processing.ppg_quality.estimate_sqi_custom_version
+   signal_processing.ppg_quality.estimate_single_sqi_value
+   signal_processing.ppg_quality.estimate_sqi_neurokit_tm
+   signal_processing.ppg_quality._sqi_neurokit_tm
+   signal_processing.ppg_quality.plot_sqi_comparison
+
+
+Module Contents
+---------------
+
+.. py:data:: RAISE_EXCEPTION_ON_PPG_PROCESSING
+   :value: True
+
+
+.. py:function:: _sqi_peaks(peaks, fs, duration)
+
+.. py:function:: _sqi_rr(peaks, fs)
+
+.. py:function:: _sqi_spectral(psd, freqs)
+
+.. py:function:: _sqi_snr(psd, freqs)
+
+.. py:function:: _compute_window_sqi(segment, fs, peaks_win)
+
+.. py:function:: estimate_sqi_custom_version(ppg, fs, peaks=None, win_sec=8, hop_sec=1, smooth=True)
+
+   Compute per-sample SQI for a PPG signal.
+
+   :returns: np.ndarray of shape (len(ppg),) with values in [0, 1]
+
+
+.. py:function:: estimate_single_sqi_value(ppg, fs) -> numpy.floating
+
+.. py:function:: estimate_sqi_neurokit_tm(ppg_signal, fs) -> numpy.ndarray
+
+   The ppg_signal can be raw because neurokit2.ppg_process() will clean it internally.
+
+
+.. py:function:: _sqi_neurokit_tm(ppg, fs, method_quality='templatematch', ppg_raw=None)
+
+       Estimate Signal Quality Index (SQI) for a PPG signal using NeuroKit2.
+       Recent NeuroKit2 versions include a PPG SQI function and ppg_process() can return a continuous PPG quality index (0–1) (methods "templatematch" and "disimilarity")
+       https://neuropsychology.github.io/NeuroKit/_modules/neurokit2/ppg/ppg_process.html
+       neurokit2.ppg.ppg_process() calls ppg_quality() and places the result in the output DataFrame under the column "PPG_Quality". So running signals, info = nk.ppg_process(ppg, sampling_rate=fs) with the default/appropriate method_quality will return signals["PPG_Quality"].
+       Neuropsychology
+       The PPG pipeline exposes method_quality in ppg_process() so you can choose "templatematch" (default) or "disimilarity".
+       # When using method_quality="templatematch", an error occurs in NeuroKit2:
+       # lib\site-packages
+   eurokit2\signal\signal_period.py:83: NeuroKitWarning:
+       # Too few peaks detected to compute the rate. Returning empty vector.
+       # ValueError: cannot convert float NaN to integer
+       # I tried using method_quality="dissimilarity" instead, but the SQI values are too small.
+       # I then tried ho2025 and others, but they also give very small SQI values. So I will stick to "templatematch"
+       # and handle the error by returning 0 values for the SQI signal.
+
+
+
+.. py:function:: plot_sqi_comparison(ppg, fs, title='SQI Comparison', show=True)
+
+   Plot the PPG waveform superimposed with the SQI signals from both
+   estimate_sqi_neurokit_tm and estimate_sqi_custom_version for visual comparison.
+
+   :param ppg: Raw PPG signal.
+   :type ppg: array-like
+   :param fs: Sampling frequency in Hz.
+   :type fs: float
+   :param title: Title for the figure.
+   :type title: str
+   :param show: Whether to call plt.show(). Set False when embedding in a larger figure.
+   :type show: bool
+
+
+.. py:data:: ppg
+   :value: None
+
+

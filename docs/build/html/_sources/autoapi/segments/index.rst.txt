@@ -1,0 +1,20 @@
+segments
+========
+
+.. py:module:: segments
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/segments/create_segment_files/index
+   /autoapi/segments/features_best_segments/index
+   /autoapi/segments/save_good_segments/index
+   /autoapi/segments/segments_core/index
+   /autoapi/segments/segments_to_fixed_duration_windows/index
+   /autoapi/segments/select_segments/index
+
+

@@ -1,0 +1,129 @@
+machinelearning.feature_selection_for_regression
+================================================
+
+.. py:module:: machinelearning.feature_selection_for_regression
+
+.. autoapi-nested-parse::
+
+   For your use case, Leave-One-Subject-Out (LOSO) is the correct validation strategy. Below is a clean reimplementation with the following properties:
+
+   Strict LOSO split using participant_id
+   Scaler fit only on training folds
+   RFE performed inside each fold (no leakage)
+   Per-fold metrics + global aggregation
+   Feature stability analysis (how often each feature is selected)
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   machinelearning.feature_selection_for_regression.INPUT_FEATURES_FILE
+   machinelearning.feature_selection_for_regression.OUTPUT_FILE_WITH_SELECTED_FEATURES
+   machinelearning.feature_selection_for_regression.EXCLUDED_FEATURE_COLUMNS
+   machinelearning.feature_selection_for_regression.classifier_index
+   machinelearning.feature_selection_for_regression.n_features_to_select
+   machinelearning.feature_selection_for_regression.feature_selection_method
+   machinelearning.feature_selection_for_regression.parser
+   machinelearning.feature_selection_for_regression.regressors
+   machinelearning.feature_selection_for_regression.input_file_name
+   machinelearning.feature_selection_for_regression.df
+   machinelearning.feature_selection_for_regression.metadata_cols
+   machinelearning.feature_selection_for_regression.feature_cols
+   machinelearning.feature_selection_for_regression.X
+   machinelearning.feature_selection_for_regression.y
+   machinelearning.feature_selection_for_regression.groups
+   machinelearning.feature_selection_for_regression.subjects
+   machinelearning.feature_selection_for_regression.mse_list
+   machinelearning.feature_selection_for_regression.r2_list
+   machinelearning.feature_selection_for_regression.feature_selection_counts
+   machinelearning.feature_selection_for_regression.train_idx
+   machinelearning.feature_selection_for_regression.feature_freq
+   machinelearning.feature_selection_for_regression.feature_freq
+   machinelearning.feature_selection_for_regression.selection_threshold
+   machinelearning.feature_selection_for_regression.stable_features_df
+   machinelearning.feature_selection_for_regression.stable_features
+   machinelearning.feature_selection_for_regression.final_columns
+   machinelearning.feature_selection_for_regression.df_selected
+   machinelearning.feature_selection_for_regression.dataset_output_file
+
+
+Module Contents
+---------------
+
+.. py:data:: INPUT_FEATURES_FILE
+   :value: 'multimodal_features_with_metadata.csv'
+
+
+.. py:data:: OUTPUT_FILE_WITH_SELECTED_FEATURES
+   :value: 'dataset_selected_features_loso.csv'
+
+
+.. py:data:: EXCLUDED_FEATURE_COLUMNS
+   :value: ['quality_indicator', 'ecg_sqi']
+
+
+.. py:data:: classifier_index
+
+.. py:data:: n_features_to_select
+
+.. py:data:: feature_selection_method
+
+.. py:data:: parser
+
+.. py:data:: regressors
+
+.. py:data:: input_file_name
+
+.. py:data:: df
+   :value: None
+
+
+.. py:data:: metadata_cols
+   :value: ['participant_id', 'session_id', 'datetime', 'GLC']
+
+
+.. py:data:: feature_cols
+
+.. py:data:: X
+
+.. py:data:: y
+
+.. py:data:: groups
+
+.. py:data:: subjects
+
+.. py:data:: mse_list
+   :value: []
+
+
+.. py:data:: r2_list
+   :value: []
+
+
+.. py:data:: feature_selection_counts
+
+.. py:data:: train_idx
+
+.. py:data:: feature_freq
+
+.. py:data:: feature_freq
+   :value: None
+
+
+.. py:data:: selection_threshold
+   :value: 0.5
+
+
+.. py:data:: stable_features_df
+
+.. py:data:: stable_features
+
+.. py:data:: final_columns
+
+.. py:data:: df_selected
+
+.. py:data:: dataset_output_file
+

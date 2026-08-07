@@ -1,0 +1,39 @@
+correlation_vs_mutual_information
+=================================
+
+.. py:module:: correlation_vs_mutual_information
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   correlation_vs_mutual_information.n
+   correlation_vs_mutual_information.x1
+   correlation_vs_mutual_information.y1
+   correlation_vs_mutual_information.mi1
+   correlation_vs_mutual_information.x2
+   correlation_vs_mutual_information.y2
+   correlation_vs_mutual_information.mi2
+
+
+Module Contents
+---------------
+
+.. py:data:: n
+   :value: 1000
+
+
+.. py:data:: x1
+
+.. py:data:: y1
+
+.. py:data:: mi1
+
+.. py:data:: x2
+
+.. py:data:: y2
+
+.. py:data:: mi2
+

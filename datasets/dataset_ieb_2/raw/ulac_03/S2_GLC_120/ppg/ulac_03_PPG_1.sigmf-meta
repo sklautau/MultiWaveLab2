@@ -1,0 +1,19 @@
+{
+  "global": {
+    "core:datatype": "rf32_le",
+    "core:sample_rate": 500,
+    "core:version": "1.0.0",
+    "core:uuid": "f11ed3c7-1d3e-44b5-be6c-f57083be2ebf",
+    "myproject:file_id": "file_id12",
+    "myproject:quantization_step": 1.0,
+    "myproject:header": [
+      "PPG"
+    ]
+  },
+  "captures": [
+    {
+      "core:sample_start": 0
+    }
+  ],
+  "annotations": []
+}

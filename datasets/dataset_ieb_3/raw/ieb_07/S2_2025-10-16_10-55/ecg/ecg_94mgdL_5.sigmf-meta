@@ -1,0 +1,30 @@
+{
+  "global": {
+    "core:datatype": "rf32_le",
+    "core:sample_rate": 500,
+    "core:version": "1.0.0",
+    "core:uuid": "2fff9560-8ffb-4c79-93e9-4584e5029d97",
+    "myproject:file_id": "file_id83",
+    "myproject:quantization_step": 1.0,
+    "myproject:header": [
+      "Hora de cria\u00e7\u00e3o,2025-10-16 10:59:00,",
+      "Frequ\u00eancia card\u00edaca m\u00e9dia,56,",
+      "Classifica\u00e7\u00e3o,Ritmo sinusal,",
+      "Sintomas,,",
+      "Vers\u00e3o do software,Wear OS 14,",
+      "Aparelho,Galaxy Watch6 (18HD),",
+      "Taxa de amostragem,500,000 Hz",
+      ",,",
+      ",,",
+      "Deriva\u00e7\u00e3o,Lead I,",
+      "Unidade,mV,",
+      ",,"
+    ]
+  },
+  "captures": [
+    {
+      "core:sample_start": 0
+    }
+  ],
+  "annotations": []
+}

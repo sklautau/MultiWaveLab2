@@ -1,0 +1,10 @@
+METADATA_COLUMNS
+participant_id
+datetime
+session_id
+GLC
+BP_SYS
+BP_DIA
+BP_HR
+PPG_files
+ECG_files

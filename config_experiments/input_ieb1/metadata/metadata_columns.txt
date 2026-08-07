@@ -1,0 +1,8 @@
+METADATA_COLUMNS
+file_id
+relative_path
+modality
+participant_id
+datetime
+GLC
+session_id

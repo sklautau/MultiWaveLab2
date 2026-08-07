@@ -1,0 +1,11 @@
+METADATA_COLUMNS
+file_id
+relative_path
+modality
+participant_id
+session_id
+datetime
+GLC
+BP_SYS
+BP_DIA
+BP_HR

@@ -1,0 +1,9 @@
+{
+	"type": "window",
+	"window_size_seconds": 10,
+	"window_shift_seconds": 10,
+	"category": "selected",
+	"mean_or_median": "median",
+	"ppg_sqi_threshold": 0.1,
+	"ecg_sqi_threshold": 0.1
+}

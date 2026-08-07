@@ -1,0 +1,21 @@
+{
+  "DATASET_NAME": "ieb1",
+  "SIMULATIONS_INPUT_PATH": "..\\config_experiments\\input_ieb1",
+  "SIMULATIONS_OUTPUT_PATH": "..\\..\\multiwavelab_outputs\\output_ieb1",
+  "DATASET_FILE": "..\\datasets\\dataset_ieb_1\\ieb_1_dataset.csv",
+  "PPG_FS": 60,
+  "PPG_SIGNAL_PROCESSING_PIPELINE": "bandpass",
+  "PPG_SIGNAL_OUTPUT_WAVEFORM": "bandpass",
+  "PPG_SQI_PROCESSING_PIPELINE": "sqi_sumall",
+  "PPG_SQI_INPUT_WAVEFORM": "bandpass",
+  "PPG_SQI_OUTPUT_WAVEFORM": "sqi_sumall",
+  "PPG_FEATURE_EXTRACTION_PIPELINE": "all",
+  "PPG_FEATURE_INPUT_WAVEFORM": "bandpass",
+  "FEATURES_FILE_PREFIX": "features10",
+  "SEGMENTER_FILE": "segmenter4_window10s_sqi08.json",
+  "TRAIN_TEST_SPLIT_PREFIX": "ieb1_manual",
+  "MODALITIES": "ppg",
+  "FINAL_NUMBER_OF_FEATURES": -1,
+  "DROP_TRAINING_EXAMPLES_FOR_PARTICIPANT_BALANCE": false,
+  "AGGREGATE_FEATURES_PER_FILE": true
+}

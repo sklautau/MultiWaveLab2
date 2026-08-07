@@ -1,0 +1,21 @@
+{
+    "global": {
+        "core:datatype": "rf32_le",
+        "core:num_channels": 1,
+        "core:offset": 0,
+        "core:sample_rate": 500,
+        "core:uuid": "f3ee5430-3841-48fd-b233-524d09a015f5",
+        "core:version": "1.2.6",
+        "myproject:file_id": "file_id19",
+        "myproject:header": [
+            "Wave"
+        ],
+        "myproject:quantization_step": 1.0
+    },
+    "captures": [
+        {
+            "core:sample_start": 0
+        }
+    ],
+    "annotations": []
+}

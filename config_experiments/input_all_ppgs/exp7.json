@@ -1,0 +1,20 @@
+{
+  "DATASET_NAME": "all_ppgs",
+  "SIMULATIONS_INPUT_PATH": "..\\config_experiments\\input_all_ppgs",
+  "SIMULATIONS_OUTPUT_PATH": "..\\..\\multiwavelab_outputs\\output_all_ppgs",
+  "DATASET_FILE": "..\\datasets\\all_ppgs_dataset\\all_ppgs_dataset.csv",
+  "PPG_FS": 500,
+  "PPG_SIGNAL_PROCESSING_PIPELINE": "bandpass",
+  "PPG_SIGNAL_OUTPUT_WAVEFORM": "bandpass",
+  "PPG_SQI_PROCESSING_PIPELINE": "sqi_sumall",
+  "PPG_SQI_INPUT_WAVEFORM": "bandpass",
+  "PPG_SQI_OUTPUT_WAVEFORM": "sqi_sumall",
+  "PPG_FEATURE_EXTRACTION_PIPELINE": "all",
+  "PPG_FEATURE_INPUT_WAVEFORM": "bandpass",
+  "FEATURES_FILE_PREFIX": "features7",
+  "SEGMENTER_FILE": "segmenter3_window10s_shift10s.json",
+  "TRAIN_TEST_SPLIT_PREFIX": "all_ppgs_manual",
+  "MODALITIES": "ppg",
+  "FINAL_NUMBER_OF_FEATURES": 20,
+  "DROP_TRAINING_EXAMPLES_FOR_PARTICIPANT_BALANCE": false
+}

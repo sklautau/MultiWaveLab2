@@ -1,0 +1,6 @@
+'''
+Utilities to read and write Dataframe files with events.
+
+@TODO: Add support for events such as PPG peaks, ECG R-peaks, etc.
+And then move this code to a folder called events.
+'''

@@ -1,0 +1,28 @@
+{
+  "global": {
+    "core:datatype": "rf32_le",
+    "core:sample_rate": 500,
+    "core:version": "1.0.0",
+    "core:uuid": "5e69b6d0-4283-4155-8dee-93b0b01e7f82",
+    "myproject:file_id": "file_id42",
+    "myproject:quantization_step": 1.0,
+    "myproject:header": [
+      "Created time,2025-10-14 09:47:26",
+      "Average heart rate,68",
+      "Classification,Inconclusive",
+      "Symptoms,",
+      "Software version,Wear OS 14",
+      "Device,Galaxy Watch6 (18HD)",
+      "Sampling rate,500.000 Hz",
+      "Lead,Lead I",
+      "Unit,mV",
+      ","
+    ]
+  },
+  "captures": [
+    {
+      "core:sample_start": 0
+    }
+  ],
+  "annotations": []
+}

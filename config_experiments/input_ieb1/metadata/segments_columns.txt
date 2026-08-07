@@ -1,0 +1,7 @@
+SEGMENTS_COLUMNS
+segment_id
+file_id
+modality
+start_sample
+duration
+quality_indicator

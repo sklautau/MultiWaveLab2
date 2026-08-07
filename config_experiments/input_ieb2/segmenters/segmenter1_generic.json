@@ -1,0 +1,8 @@
+{
+	"type": "generic",
+	"category": "selected",
+	"wave_min_duration": 10,
+	"mean_or_median": "median",
+	"ppg_sqi_threshold": 0.8964,
+	"ecg_sqi_threshold": 0.5127
+}

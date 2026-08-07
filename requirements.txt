@@ -1,0 +1,14 @@
+dotmap==1.3.30
+emd-signal==1.9.0
+matplotlib==3.10.9
+mrmr_selection==0.2.8
+neurokit2==0.2.13
+numpy==2.2.6
+pandas==2.3.3
+pingouin==0.6.1
+scikit-learn==1.7.2                    
+scipy==1.15.3
+seaborn==0.13.2
+sigmf==1.11.1
+umap_learn==0.5.12
+mne==1.5.0

@@ -160,7 +160,7 @@ def _plot_participant_duration_pdf(
     y_labels = participant_df["participant_id"].astype(str).tolist()
     x_values = participant_df["duration_seconds"].astype(float).tolist()
 
-    ax.barh(y_labels, x_values, color="tab:blue", alpha=0.9)
+    ax.barh(y_labels, x_values, color="#558E41", alpha=0.9)
     ax.set_xlabel(x_label, fontsize=AXIS_LABEL_FONTSIZE)
     ax.set_ylabel("Participant ID", fontsize=AXIS_LABEL_FONTSIZE)
     ax.set_title(title, fontsize=TITLE_FONTSIZE)

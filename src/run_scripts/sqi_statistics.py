@@ -311,6 +311,8 @@ def _save_superimposed_cumulative_pdf(
     if len(non_empty) == 0:
         return
 
+    marker_styles = ["o", "s", "^", "D", "v", "P", "X", "<", ">", "*"]
+
     global_min = min(float(np.min(v)) for v in non_empty)
     global_max = max(float(np.max(v)) for v in non_empty)
     if np.isclose(global_min, global_max):
@@ -331,6 +333,12 @@ def _save_superimposed_cumulative_pdf(
         bin_widths = np.diff(bin_edges)
         cdf = np.cumsum(hist * bin_widths)
         cdf = np.clip(cdf, 0.0, 1.0)
+        marker_count = min(5, cdf.size)
+        markevery = None
+        if marker_count > 1:
+            markevery = np.unique(
+                np.linspace(0, cdf.size - 1, marker_count, dtype=int)
+            ).tolist()
 
         plt.plot(
             bin_edges[1:],
@@ -338,6 +346,9 @@ def _save_superimposed_cumulative_pdf(
             linewidth=2.0,
             alpha=0.95,
             color=colors(idx),
+            marker=marker_styles[idx % len(marker_styles)],
+            markersize=5,
+            markevery=markevery,
             label=pipeline,
         )
 
@@ -346,7 +357,7 @@ def _save_superimposed_cumulative_pdf(
     plt.title("SQI cumulative PDF (CDF) (all pipelines, shared x-axis)")
     plt.ylim(0.0, 1.02)
     plt.grid(True, alpha=0.3)
-    plt.legend(loc="lower right", fontsize=9)
+    plt.legend(loc="upper left", fontsize=9)
     plt.tight_layout()
     out_file.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(out_file, dpi=180)

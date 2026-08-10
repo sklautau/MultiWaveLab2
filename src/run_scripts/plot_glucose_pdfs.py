@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 use_histograms = False  # Set to True to use histograms instead of PDFs
+marker_count = 2  # Set how many markers to show on each KDE curve
 
 # ---------------------------------------------------------------------
 # Files
@@ -20,6 +21,12 @@ colors = {
     "IEB1": "#007ea7",  # blue
     "IEB2": "#7f055f",  # orange
     "IEB3": "#558E41",  # green
+}
+
+marker_styles = {
+    "IEB1": "o",
+    "IEB2": "s",
+    "IEB3": "^",
 }
 
 # ---------------------------------------------------------------------
@@ -60,7 +67,22 @@ for name in ["IEB1", "IEB2", "IEB3"]:
 
             x = np.linspace(all_values.min(), all_values.max(), 400)
             kde = gaussian_kde(datasets[name])
-            plt.plot(x, kde(x), lw=2.5, color=colors[name])
+            y = kde(x)
+            if marker_count <= 1:
+                markevery = [len(x) // 2]
+            else:
+                markevery = np.unique(
+                    np.linspace(0, len(x) - 1, marker_count, dtype=int)
+                ).tolist()
+            plt.plot(
+                x,
+                y,
+                lw=2.5,
+                color=colors[name],
+                marker=marker_styles[name],
+                markersize=5,
+                markevery=markevery,
+            )
 
             plt.plot(
                 datasets[name],

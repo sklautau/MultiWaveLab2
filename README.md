@@ -10,7 +10,7 @@ Full project documentation is available at:
 
 **https://sklautau.github.io/MultiWaveLab2**
 
-## Reproducibility: data availability statement
+## Data availability statement for reproducibility
 
 This repository contains the data required to reproduce the reported computational experiments. All data included has been anonymized, and only glucose and biomedical signals are available. Personal or identifiable participant information not required for reproduction is not included.
 

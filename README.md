@@ -10,6 +10,10 @@ Full project documentation is available at:
 
 **https://sklautau.github.io/MultiWaveLab2**
 
+## Reproducibility: data availability statement
+
+This repository contains the data required to reproduce the reported computational experiments. All data included has been anonymized, and only glucose and biomedical signals are available. Personal or identifiable participant information not required for reproduction is not included.
+
 ## What this repository does
 
 MultiWaveLab2 provides a configurable and reproducible framework for biomedical signal processing and machine learning experiments related to non-invasive glucose estimation.
@@ -42,13 +46,6 @@ python sofias_dissertation_results.py
 This script sequentially executes the processing and machine learning pipelines required to reproduce the dissertation experiments.
 
 > **Note:** Full execution may take several hours, depending on the computer and available resources. The script is intended for complete reproducibility rather than as a quick example.
-
-The corresponding dissertation will be linked here after it becomes publicly available through the Federal University of Santa Catarina institutional repository.
-
-## Reproducibility data
-
-The repository contains the data required to reproduce the reported computational experiments. Publicly available research data have been anonymized, and personal or identifiable participant information not required for reproduction is not included.
-
 
 ## Installing MultiWaveLab
 

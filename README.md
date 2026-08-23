@@ -6,7 +6,7 @@ This work was approved by the Ethics in Research with Humans Committee at UFSC, 
 
 ## Documentation
 
-Full project documentation is available at:
+Project documentation is available at:
 
 **https://sklautau.github.io/MultiWaveLab2**
 
